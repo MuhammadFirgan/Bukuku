@@ -5,7 +5,7 @@ import { View, Text, Image } from 'react-native'
 
 export default function login() {
   return (
-    <View className='bg-white w-[90%] p-5 -mt-5 rounded-xl relative'>
+    <View className='bg-white w-[90%] p-5 -mt-14 rounded-xl relative mb-14'>
       {/* <View className=''>
         <Image source={require('../../assets/images/login.png')} className='size-32 absolute left-1/2 right-1/2 -translate-x-1/2 -translate-y-24 bg-secondary border rounded-full p-5 border-white' resizeMode='contain'/>
       </View> */}
