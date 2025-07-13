@@ -1,9 +1,28 @@
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
-import { View, Text, Image } from 'react-native'
+import { login } from '@/utils/actions/auth.action'
+import { auth$ } from '@/utils/states/authState'
+import { router } from 'expo-router'
+import { useState } from 'react'
+import { View, Image, Alert } from 'react-native'
 
 
-export default function login() {
+export default function Login() {
+  const [ form, setForm ] = useState({
+    'username': '',
+    'password': ''
+  })
+
+  const handleSubmit = async () => {
+    try {
+      const dataLogin = await login(form.username, form.password)
+
+      auth$.session.set(dataLogin.session)
+      router.push('/')
+    } catch (error: any) {
+      Alert.alert('Error', error.message)
+    }
+  }
   return (
     <View className='bg-white w-[90%] p-5 -mt-14 rounded-xl relative mb-14'>
       {/* <View className=''>
@@ -23,13 +42,22 @@ export default function login() {
         <CustomInput 
           label='Username'
           password={false}
+          onChangeText={(text) => setForm((prev) => ({ ...prev, username: text }))}
+          value={form.username}
         />
+
+
         <CustomInput 
           label='Password'
           password={true}
+          onChangeText={(text) => setForm((prev) => ({ ...prev, password: text }))}
+          value={form.password}
         />
         <View className='mt-3'>
-          <CustomButton />
+          <CustomButton 
+            text='Login'
+            onPress={handleSubmit}
+          />
         </View>
       </View>
     </View>

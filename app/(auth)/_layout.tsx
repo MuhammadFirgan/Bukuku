@@ -1,10 +1,10 @@
-import { Dimensions, Image, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
+import { Dimensions, Image, View } from 'react-native'
 import { Slot } from 'expo-router'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const koinImage= require('../../assets/images/koin.png')
 
-export default function _layout() {
+const layout = () => {
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -30,3 +30,5 @@ export default function _layout() {
     </KeyboardAwareScrollView>
   )
 }
+
+export default layout
