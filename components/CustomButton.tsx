@@ -1,6 +1,7 @@
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { CustomButtonProps } from '@/types'
+import CustomText from './CustomText'
 
 export default function CustomButton({ text, onPress, loading = false, disable = false }: CustomButtonProps) {
   return (
@@ -9,7 +10,7 @@ export default function CustomButton({ text, onPress, loading = false, disable =
         <ActivityIndicator size="small" color="ffff"/>
       ) : (
 
-        <Text className='text-xl uppercase text-white w-full text-center'>{text}</Text>
+        <CustomText className='text-xl uppercase text-white w-full text-center'>{text}</CustomText>
       )}
     </TouchableOpacity>
   )

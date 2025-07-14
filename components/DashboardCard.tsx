@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
 import React from 'react'
+import CustomText from './CustomText'
 
 
 export default function DashboardCard({ item, index }: any) {
@@ -24,7 +25,7 @@ export default function DashboardCard({ item, index }: any) {
         //  onPress={() => router.push(menu.route)}
         >
         <Image source={item.icon} className="size-32 mb-3" resizeMode="contain"/>
-        <Text className='text-white font-semibold text-xl'>{item.label}</Text>
+        <CustomText className='text-white font-semibold text-xl'>{item.label}</CustomText>
 
     </TouchableOpacity>
   )
