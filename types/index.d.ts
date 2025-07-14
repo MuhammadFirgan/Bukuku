@@ -8,4 +8,6 @@ export interface CustomInputProps {
 export interface CustomButtonProps {
     text: string
     onPress: () => void
+    loading?: boolean
+    disable?: boolean
 }

@@ -12,8 +12,10 @@ export default function Login() {
     'username': '',
     'password': ''
   })
+  const [ loading, setLoading ] = useState(false)
 
   const handleSubmit = async () => {
+    setLoading(true)
     try {
       const dataLogin = await login(form.username, form.password)
 
@@ -21,6 +23,8 @@ export default function Login() {
       router.push('/')
     } catch (error: any) {
       Alert.alert('Error', error.message)
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -54,6 +58,8 @@ export default function Login() {
           <CustomButton 
             text='Login'
             onPress={handleSubmit}
+            loading={loading}
+            disable={loading}
           />
         </View>
       </View>

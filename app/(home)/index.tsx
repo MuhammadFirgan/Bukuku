@@ -1,8 +1,7 @@
 
 import DashboardCard from "@/components/DashboardCard";
 import { menuItems } from "@/constants";
-import { router } from "expo-router";
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
  
 export default function Index() {
@@ -15,6 +14,11 @@ export default function Index() {
             resizeMode="contain"
           />
         </View>
+
+        {/* Panggil session di index, biar dak bolak balik login  */}
+        {/* tambahkan fitur logout */}
+        {/* Ready Task 2 */}
+
 
         <FlatList 
           data={menuItems}
