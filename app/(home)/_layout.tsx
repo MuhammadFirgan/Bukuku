@@ -1,11 +1,10 @@
-import { View, Text } from 'react-native'
+
 import { Redirect, Slot } from 'expo-router'
+import { auth$ } from '@/utils/states/authState'
 
 export default function _layout() {
 
-    const isAuth = true
-
-    if(!isAuth) return <Redirect href="/login" />
+    if(!auth$.session.get()) return <Redirect href="/login" />
   return (
     <Slot />
   )
