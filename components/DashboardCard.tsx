@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
+import { TouchableOpacity, Image, useWindowDimensions } from 'react-native'
 import React from 'react'
 import CustomText from './CustomText'
 
