@@ -19,10 +19,6 @@ export default function Index() {
           />
         </View>
 
-        {/* Panggil session di index, biar dak bolak balik login  */}
-        {/* tambahkan fitur logout */}
-        {/* Ready Task 2 */}
-
 
         <FlatList 
           data={menuItems}

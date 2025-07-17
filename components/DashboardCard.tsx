@@ -1,6 +1,7 @@
 import { TouchableOpacity, Image, useWindowDimensions } from 'react-native'
 import React from 'react'
 import CustomText from './CustomText'
+import { router } from 'expo-router'
 
 
 export default function DashboardCard({ item, index }: any) {
@@ -22,7 +23,7 @@ export default function DashboardCard({ item, index }: any) {
             borderColor: 'white',
         }}
         className="bg-[#8AC9AF]"
-        //  onPress={() => router.push(menu.route)}
+         onPress={() => router.push(item.route)}
         >
         <Image source={item.icon} className="size-32 mb-3" resizeMode="contain"/>
         <CustomText className='text-white font-semibold text-xl'>{item.label}</CustomText>

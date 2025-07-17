@@ -1,6 +1,6 @@
 export interface CustomInputProps {
-    label: string
-    password: boolean
+    label?: string
+    password?: boolean
     onChangeText: (text: string) => void
     value: string
 }
@@ -10,4 +10,5 @@ export interface CustomButtonProps {
     onPress: () => void
     loading?: boolean
     disable?: boolean
+    className?: string
 }

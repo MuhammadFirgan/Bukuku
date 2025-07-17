@@ -8,7 +8,14 @@ import { v4 as uuidv4 } from 'uuid'
 
 export const supabase = createClient(
   process.env.EXPO_PUBLIC_SUPABASE_URL!,
-  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+      storage: AsyncStorage, 
+    }
+  }
 )
 
 const generateId = () => uuidv4()

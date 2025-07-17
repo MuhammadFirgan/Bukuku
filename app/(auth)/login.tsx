@@ -60,6 +60,7 @@ export default function Login() {
             onPress={handleSubmit}
             loading={loading}
             disable={loading}
+            className='w-72 flex justify-center items-center'
           />
         </View>
       </View>

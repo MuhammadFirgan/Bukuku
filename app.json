@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Bukuku",
-    "slug": "Bukuku",
+    "slug": "bukuku",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.muhammad.firgan.bukuku"
     },
     "web": {
       "bundler": "metro",
@@ -38,6 +39,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "1d1e2330-9cb6-4343-88be-668dbe05bb8d"
+      }
+    },
+    "owner": "muhammad.firgan"
   }
 }
