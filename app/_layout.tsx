@@ -1,8 +1,10 @@
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import './global.css'
 import { useEffect } from "react";
+import { supabase } from "@/utils/SupaLegend";
+import { auth$ } from "@/utils/states/authState";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -14,11 +16,23 @@ export default function RootLayout() {
     if (loaded || error) {
       SplashScreen.hideAsync();
     }
+
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession()
+      if (data?.session) {
+        auth$.session.set(data.session)
+      } 
+
+      if(!auth$.session.get()) return <Redirect href="/login" />
+    }
+
+    getSession()
   }, [loaded, error]);
 
   if (!loaded && !error) {
     return null;
   }
+
 
   return <Stack 
     screenOptions={{

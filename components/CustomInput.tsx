@@ -11,7 +11,12 @@ export default function CustomInput({
  }: CustomInputProps) {
   return (
     <View className='flex justify-center flex-col items-center w-full gap-4'>
+      {label ? (
+
       <CustomText weight='semibold' className='text-lg font-semibold uppercase'>{label}</CustomText>
+      ) : (
+        null
+      )}
       <TextInput 
         className='border rounded-full w-72 text-primary bg-white px-8'
         secureTextEntry={password}
