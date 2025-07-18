@@ -1,5 +1,6 @@
 import CountCard from '@/components/CountCard'
 import ListItems from '@/components/ListItems'
+import ModalCreateForm from '@/components/ModalCreateForm'
 import { items } from '@/constants'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
@@ -32,9 +33,7 @@ return (
                 <EvilIcons name="search" size={24} color="black" className='absolute top-1/2 -translate-y-1/2 left-3' />
                 <TextInput className='border border-gray-400 w-72 rounded-xl placeholder:pl-10' placeholder='Search...'/>
             </View>
-            <TouchableOpacity className='p-3 bg-primary rounded-xl'>
-                <Text>Barang Baru</Text>
-            </TouchableOpacity>
+            <ModalCreateForm />
         </View>
 
         <FlatList 
