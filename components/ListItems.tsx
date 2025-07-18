@@ -1,12 +1,13 @@
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { ListItemsProps } from '@/types';
 
-export default function ListItems() {
+export default function ListItems({ name, price, stock }: ListItemsProps) {
   return (
     <View className='flex flex-row justify-between bg-white items-center px-2 py-4 '>
       <View>
-        <Text className='text-lg'>Indomie Rendang</Text>
-        <Text className='text-sm text-gray-600'>Stock Tersedia : 15</Text>
+        <Text className='text-lg'>{name}</Text>
+        <Text className='text-sm text-gray-600'>Stock Tersedia : {stock}</Text>
       </View>
       <View className='flex flex-col items-center '>
 
@@ -14,7 +15,7 @@ export default function ListItems() {
             <Text className="text-xs">Stock :</Text>
             <View className="flex flex-col items-center">
                 <Text className="text-xs ">Max : 5</Text>
-                <Text className="border w-16 text-black text-xs text-center py-0">5</Text>
+                <Text className="border w-16 text-black text-xs text-center py-0 opacity-50">5</Text>
             </View>
         </View>
 
@@ -31,7 +32,7 @@ export default function ListItems() {
       </View>
       <View>
         <Text className='text-sm text-gray-700'>Keuntungan Satuan</Text>
-        <Text className='text-xl text-center'>1.100</Text>
+        <Text className='text-xl text-center'>{price}</Text>
       </View>
     </View>
   )

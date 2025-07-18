@@ -6,3 +6,26 @@ export const menuItems = [
     { label: 'Pembelian', icon: require('../assets/images/pembelian.png'), route: '/pembelian' },
     { label: 'Laporan', icon: require('../assets/images/report.png'), route: '/laporan' },
 ];
+
+export const items = [
+    {
+        nama: "Indomie Rendang",
+        harga: 1500,
+        stock: 15
+    },
+    {
+        nama: "Aoka",
+        harga: 2500,
+        stock: 15
+    },
+    {
+        nama: "Golda",
+        harga: 3500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+]

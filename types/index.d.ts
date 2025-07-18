@@ -12,3 +12,9 @@ export interface CustomButtonProps {
     disable?: boolean
     className?: string
 }
+
+export interface ListItemsProps {
+    name: string
+    price: number
+    stock: number
+}
