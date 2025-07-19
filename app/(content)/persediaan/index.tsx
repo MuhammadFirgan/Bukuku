@@ -3,10 +3,12 @@ import CreateFormLayout from '@/components/CreateFormLayout'
 import ListItems from '@/components/ListItems'
 import { items } from '@/constants'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
-import { View, TextInput, FlatList } from 'react-native'
+import { useState } from 'react'
+import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
 
 
-export default function index() {
+export default function Index() {
+    const [modalOpen, setModalOpen] = useState<boolean>(false)
 return (
     <View className='w-full '>
         <View className='flex flex-row flex-wrap -mt-14 px-7'>
@@ -33,7 +35,15 @@ return (
                 <EvilIcons name="search" size={24} color="black" className='absolute top-1/2 -translate-y-1/2 left-3' />
                 <TextInput className='border border-gray-400 w-72 rounded-xl placeholder:pl-10' placeholder='Search...'/>
             </View>
-           <CreateFormLayout />
+            <TouchableOpacity 
+                className='p-3 bg-primary rounded-xl mr-4' 
+                onPress={() => setModalOpen(!modalOpen)}>
+                <Text>Tambah Barang</Text>
+            </TouchableOpacity>
+           <CreateFormLayout 
+                visible={modalOpen}
+                onClose={() => setModalOpen(false)}
+           />
         </View>
 
         <FlatList 

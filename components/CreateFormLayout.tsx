@@ -1,12 +1,14 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
 import ModalLayout from './ModalLayout'
+import { ModalTrigger } from '@/types'
 
-export default function CreateFormLayout() {
+export default function CreateFormLayout({visible, onClose}: ModalTrigger) {
   return (
     <ModalLayout 
         headerTitle='BARANG BARU'
         buttonLabel='Barang Baru'
+        visible={visible}
+        onClose={onClose}
     >
         <View className='flex flex-row gap-4 px-4 mt-12'>
             <View className="flex flex-col gap-4">

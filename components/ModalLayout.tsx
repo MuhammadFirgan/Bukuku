@@ -1,22 +1,22 @@
 import { ModalLayoutProps } from '@/types'
 import AntDesign from '@expo/vector-icons/AntDesign'
-import { useState } from 'react'
 import { View, Text, TouchableOpacity, Modal, Pressable} from 'react-native'
 
 
-export default function ModalLayout({ headerTitle, buttonLabel, children }: ModalLayoutProps) {
-    const [ modalVisible, setModalVisible ] = useState(false)
+export default function ModalLayout({ headerTitle, children, visible, onClose }: ModalLayoutProps) {
   return (
     <View >
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(!modalVisible)}
+            // visible={modalVisible}
+            visible={visible}
+            // onRequestClose={() => setModalVisible(!modalVisible)}
+            onRequestClose={onClose}
         >
             <Pressable
                 className='flex-1 bg-black/40 justify-start items-center'
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={onClose}
             >
                 <Pressable 
                     className='w-full'
@@ -27,7 +27,7 @@ export default function ModalLayout({ headerTitle, buttonLabel, children }: Moda
                         <View className='bg-primary h-40 rounded-b-2xl shadow-md'>
                             <TouchableOpacity
                                 className="absolute left-4 top-4"
-                                onPress={() => setModalVisible(!modalVisible)}
+                                onPress={onClose}
                             >
                                 <AntDesign name="left" size={24} color="white" />
                             </TouchableOpacity>
@@ -40,11 +40,7 @@ export default function ModalLayout({ headerTitle, buttonLabel, children }: Moda
                 </Pressable>
             </Pressable>
         </Modal>
-        <TouchableOpacity 
-            className='p-3 bg-primary rounded-xl' 
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text>{buttonLabel}</Text>
-        </TouchableOpacity>
+        
     </View>
   )
 }
