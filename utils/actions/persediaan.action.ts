@@ -25,8 +25,14 @@ export async function createBarang({nama_barang, harga_beli, harga_jual, keuntun
 
 export function readBarang() {
     try {
-        const dataBarang = persediaan$.get()
-        return JSON.parse(JSON.stringify(dataBarang))
+        const fetchingDataBarang = persediaan$.get()
+        
+        const dataBarang = Object.entries(fetchingDataBarang).map(([id, item]) => ({
+            id,
+            ...item
+        }));
+
+        return dataBarang;
     } catch (error) {
         console.error('Error creating barang:', error);
         throw error;

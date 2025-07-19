@@ -36,7 +36,7 @@ export default function ListItems({ name, price, stock }: ListItemsProps) {
           <View className="flex flex-row items-end gap-2 space-x-2">
             <Text className="text-xs">Stock :</Text>
             <View className="flex flex-col items-center">
-              <Text className="text-xs">Max : {maxStock}</Text>
+              <Text className="text-xs">Max : 5</Text>
               <Text className="border w-16 text-black text-xs text-center py-0 opacity-50">{stockExist}</Text>
             </View>
           </View>
@@ -62,7 +62,7 @@ export default function ListItems({ name, price, stock }: ListItemsProps) {
 
         <View>
           <Text className='text-sm text-gray-700'>Keuntungan Satuan</Text>
-          <Text className='text-xl text-center'>{price}</Text>
+          <Text className='text-xl text-center'>Rp. {price}</Text>
         </View>
       </TouchableOpacity>
 

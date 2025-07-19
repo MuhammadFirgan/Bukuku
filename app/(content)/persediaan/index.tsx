@@ -2,6 +2,7 @@ import CountCard from '@/components/CountCard'
 import CreateFormLayout from '@/components/CreateFormLayout'
 import ListItems from '@/components/ListItems'
 import { items } from '@/constants'
+import { readBarang } from '@/utils/actions/persediaan.action'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 import { useState } from 'react'
 import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
@@ -10,7 +11,9 @@ import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
 export default function Index() {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
 
-    
+    const listBarang = readBarang()
+    console.log(listBarang)
+   
 return (
     <View className='w-full '>
         <View className='flex flex-row flex-wrap -mt-14 px-7'>
@@ -20,7 +23,7 @@ return (
             />
             <CountCard 
                 label='Barang'
-                value='123'
+                value={listBarang.length.toString()}
             />
             <CountCard 
                 label='Barang Masuk'
@@ -49,15 +52,15 @@ return (
         </View>
 
         <FlatList 
-            data={items}
+            data={listBarang}
             keyExtractor={(item) => item.nama}
             showsVerticalScrollIndicator={false}
             renderItem={({item}) => (
 
                 <ListItems 
-                    name={item.nama}
-                    price={item.harga}
-                    stock={item.stock}
+                    name={item.nama_barang}
+                    price={item.harga_jual - item.harga_beli}
+                    stock={item.quantity}
                     
                 />
             )}
