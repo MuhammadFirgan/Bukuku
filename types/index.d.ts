@@ -19,8 +19,14 @@ export interface ListItemsProps {
     stock: number
 }
 
-export type ModalLayoutProps = {
-    headerTitle: string
-    buttonLabel: string
+export interface ModalTrigger {
+    visible: boolean
+    onClose: () => void
+}
+
+export interface ModalLayoutProps extends ModalTrigger {
+    headerTitle?: string
+    buttonLabel?: string
     children: React.ReactNode
+    
 }
