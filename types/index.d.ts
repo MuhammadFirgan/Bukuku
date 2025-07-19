@@ -18,3 +18,9 @@ export interface ListItemsProps {
     price: number
     stock: number
 }
+
+export type ModalLayoutProps = {
+    headerTitle: string
+    buttonLabel: string
+    children: React.ReactNode
+}
