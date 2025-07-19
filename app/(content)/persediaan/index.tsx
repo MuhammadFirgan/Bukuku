@@ -9,6 +9,8 @@ import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
 
 export default function Index() {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
+
+    
 return (
     <View className='w-full '>
         <View className='flex flex-row flex-wrap -mt-14 px-7'>

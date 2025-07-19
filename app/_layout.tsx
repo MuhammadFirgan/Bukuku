@@ -5,6 +5,7 @@ import './global.css'
 import { useEffect } from "react";
 import { supabase } from "@/utils/SupaLegend";
 import { auth$ } from "@/utils/states/authState";
+import 'react-native-get-random-values';
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({

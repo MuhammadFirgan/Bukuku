@@ -30,3 +30,12 @@ export interface ModalLayoutProps extends ModalTrigger {
     children: React.ReactNode
     
 }
+
+export interface PersediaanForm {
+    nama_barang: string;
+    harga_jual: number;
+    harga_beli: number;
+    keuntungan: number;
+    quantity?: number;
+    reset_date?: number;
+}

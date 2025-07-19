@@ -18,7 +18,7 @@ export const supabase = createClient(
   }
 )
 
-const generateId = () => uuidv4()
+export const generateId = () => uuidv4()
 
 export const customSynced = configureSynced(syncedSupabase, {
 
