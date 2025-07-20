@@ -2,23 +2,59 @@ import CountCard from '@/components/CountCard'
 import CreateFormLayout from '@/components/CreateFormLayout'
 import ListItems from '@/components/ListItems'
 import { readBarang } from '@/utils/actions/persediaan.action'
+import { totalMasuk } from '@/utils/libs'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
-import { useState } from 'react'
-import { View, TextInput, FlatList, TouchableOpacity, Text } from 'react-native'
+import { useEffect, useState } from 'react'
+import { View, TextInput, FlatList, TouchableOpacity, Text, ActivityIndicator } from 'react-native'
 
 
 export default function Index() {
     const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [listBarang, setListBarang] = useState<any[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null)
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          setLoading(true)
+          const result = await readBarang()
+          setListBarang(result)
+        } catch (err) {
+          setError('Gagal memuat data barang')
+          console.error(err)
+        } finally {
+          setLoading(false)
+        }
+      }
+  
+      fetchData()
+    }, [])
+    const totalQuantity = listBarang.reduce((total, item) => total + Number(item.quantity || 0), 0)
+  
 
-    const listBarang = readBarang()
-    console.log(listBarang)
-   
+    if (loading) {
+      return (
+        <View className="flex-1 justify-center items-center">
+          <ActivityIndicator size="large" color="#4F46E5" />
+          <Text className="mt-2 text-gray-600">Memuat data...</Text>
+        </View>
+      )
+    }
+  
+    if (error) {
+      return (
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-red-500">{error}</Text>
+        </View>
+      )
+    }
 return (
     <View className='w-full '>
         <View className='flex flex-row flex-wrap -mt-14 px-7'>
             <CountCard 
                 label='Persediaan'
-                value='123'
+                value={totalQuantity}
             />
             <CountCard 
                 label='Barang'
@@ -26,7 +62,7 @@ return (
             />
             <CountCard 
                 label='Barang Masuk'
-                value='123'
+                value={totalMasuk}
             />
             <CountCard 
                 label='Barang Keluar'
