@@ -1,7 +1,6 @@
 import CountCard from '@/components/CountCard'
 import CreateFormLayout from '@/components/CreateFormLayout'
 import ListItems from '@/components/ListItems'
-import { items } from '@/constants'
 import { readBarang } from '@/utils/actions/persediaan.action'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 import { useState } from 'react'
@@ -58,6 +57,7 @@ return (
             renderItem={({item}) => (
 
                 <ListItems 
+                    id={item.id}
                     name={item.nama_barang}
                     price={item.harga_jual - item.harga_beli}
                     stock={item.quantity}
