@@ -6,7 +6,8 @@ import { persediaan$ } from "../states/PesediaanState";
 export async function createBarang({nama_barang, harga_beli, harga_jual, keuntungan,  quantity}: PersediaanForm) {
     try {
         const id = generateId();
-        persediaan$[id].assign({
+        
+        persediaan$[id]?.assign({
             id,
             nama_barang,
             harga_jual,
@@ -25,10 +26,29 @@ export async function createBarang({nama_barang, harga_beli, harga_jual, keuntun
 
 export function readBarang() {
     try {
-        const dataBarang = persediaan$.get()
-        return JSON.parse(JSON.stringify(dataBarang))
+        const fetchingDataBarang = persediaan$.get()
+        
+        const dataBarang = Object.entries(fetchingDataBarang).map(([id, item]) => ({
+            id,
+            ...item
+        }));
+
+        return dataBarang;
     } catch (error) {
         console.error('Error creating barang:', error);
         throw error;
+    }
+}
+
+export function updateStock(
+    newStock: number,
+    id: any
+) {
+    try {
+        if (persediaan$[id]?.quantity) {
+            persediaan$[id].quantity.set(newStock)
+        }
+    } catch (error) {
+        console.error(error)
     }
 }

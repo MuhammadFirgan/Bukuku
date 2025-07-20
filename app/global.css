@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    @apply font-sans;
+}
+
 .bg-primary {
     @apply bg-[#85CCAD];
 }

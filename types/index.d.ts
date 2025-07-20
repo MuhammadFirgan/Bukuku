@@ -14,6 +14,7 @@ export interface CustomButtonProps {
 }
 
 export interface ListItemsProps {
+    id: any
     name: string
     price: number
     stock: number
