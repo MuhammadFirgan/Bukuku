@@ -2,7 +2,7 @@ import { View, Text, TextInput } from 'react-native'
 
 export default function EditStockForm() {
   return (
-    <>
+    <View>
       <View className="flex flex-row items-center gap-2">
         <Text className="text-left">Stock Awal</Text>
         <TextInput className="border border-gray-400 w-40 text-xs rounded-xl px-2 py-1" />
@@ -20,6 +20,6 @@ export default function EditStockForm() {
           editable={false}
         />
       </View>
-    </>
+    </View>
   )
 }
