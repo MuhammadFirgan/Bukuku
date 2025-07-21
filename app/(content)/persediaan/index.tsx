@@ -2,19 +2,26 @@ import CountCard from '@/components/CountCard'
 import CreateFormLayout from '@/components/CreateFormLayout'
 import ListItems from '@/components/ListItems'
 import { readBarang } from '@/utils/actions/persediaan.action'
-import { totalMasuk } from '@/utils/libs'
+import { totalMasuk, usePageSetup } from '@/utils/libs'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 import { useEffect, useState } from 'react'
 import { View, TextInput, FlatList, TouchableOpacity, Text, ActivityIndicator } from 'react-native'
 
 
 export default function Index() {
+
     const [modalOpen, setModalOpen] = useState<boolean>(false)
     const [listBarang, setListBarang] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
+
+    usePageSetup('Persediaan', null)
   
     useEffect(() => {
+
+      // setTitle('Persediaan');
+      // setShowFooter(false); 
+      // setFooterContent(null);
       const fetchData = async () => {
         try {
           setLoading(true)
@@ -49,6 +56,8 @@ export default function Index() {
         </View>
       )
     }
+
+    // tinggal buat bagian modal
 return (
     <View className='w-full '>
         <View className='flex flex-row flex-wrap -mt-14 px-7'>

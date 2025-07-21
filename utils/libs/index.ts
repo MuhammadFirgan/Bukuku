@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useFooter } from "../context/FooterContext";
+import { useHeaderTitle } from "../context/HeaderContext";
 import { persediaan$ } from "../states/PesediaanState";
 import { stock$ } from "../states/stockState";
 
@@ -17,3 +20,18 @@ export const totalMasuk = stockLogs
 export const totalKeluar = stockLogs
   .filter((log) => log.type === 'out')
   .reduce((acc, log) => acc + log.amount, 0);
+
+export function usePageSetup(title: string, footerContent?: React.ReactNode) {
+  const { setTitle } = useHeaderTitle();
+  const { setShowFooter, setFooterContent } = useFooter();
+
+  useEffect(() => {
+    setTitle(title);
+    if (footerContent !== undefined) {
+      setShowFooter(true);
+      setFooterContent(footerContent);
+    } else {
+      setShowFooter(false);
+    }
+  }, [title, footerContent, setTitle, setShowFooter, setFooterContent]);
+}
