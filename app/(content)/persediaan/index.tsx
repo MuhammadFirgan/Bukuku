@@ -19,9 +19,6 @@ export default function Index() {
   
     useEffect(() => {
 
-      // setTitle('Persediaan');
-      // setShowFooter(false); 
-      // setFooterContent(null);
       const fetchData = async () => {
         try {
           setLoading(true)
@@ -38,7 +35,12 @@ export default function Index() {
       fetchData()
     }, [])
     const totalQuantity = listBarang.reduce((total, item) => total + Number(item.quantity || 0), 0)
-  
+    const validBarang = listBarang.filter(
+      item =>
+        item &&
+        item.nama_barang &&
+        !isNaN(item.harga_jual - item.harga_beli)
+    );
 
     if (loading) {
       return (
@@ -94,13 +96,15 @@ return (
                 onClose={() => setModalOpen(false)}
            />
         </View>
+        <View className='flex-1'>
 
-        <FlatList 
-            data={listBarang}
-            keyExtractor={(item) => item.nama}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
-
+        </View>
+          <FlatList 
+              data={validBarang}
+              keyExtractor={(item) => item.nama}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 50 }}
+              renderItem={({item}) => (
                 <ListItems 
                     id={item.id}
                     name={item.nama_barang}
@@ -108,8 +112,8 @@ return (
                     stock={item.quantity}
                     
                 />
-            )}
-        />
+              )}
+          />
 
         
     </View>

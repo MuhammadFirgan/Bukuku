@@ -1,4 +1,5 @@
 
+import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { HeaderTitleProvider } from '@/utils/context/HeaderContext'
 import { Slot } from 'expo-router'
@@ -11,12 +12,9 @@ export default function layout() {
     <HeaderTitleProvider>
       <SafeAreaView>
         <Header />
-        {/* <View className='bg-primary h-48 rounded-b-2xl'>
-          <View className='flex justify-center items-center flex-col flex-1 gap-3'>
-            <Text className='text-white text-3xl font-semibold uppercase'>Persediaan</Text>
-          </View>
-        </View> */}
+
         <Slot />
+        <Footer />
       </SafeAreaView>
     </HeaderTitleProvider>
   )
