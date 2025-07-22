@@ -21,17 +21,24 @@ export const totalKeluar = stockLogs
   .filter((log) => log.type === 'out')
   .reduce((acc, log) => acc + log.amount, 0);
 
-export function usePageSetup(title: string, footerContent?: React.ReactNode) {
-  const { setTitle } = useHeaderTitle();
-  const { setShowFooter, setFooterContent } = useFooter();
-
-  useEffect(() => {
-    setTitle(title);
-    if (footerContent !== undefined) {
-      setShowFooter(true);
-      setFooterContent(footerContent);
-    } else {
-      setShowFooter(false);
-    }
-  }, [title, footerContent, setTitle, setShowFooter, setFooterContent]);
-}
+// export function usePageSetup(title: string, showFooter?: boolean, footerContent?: React.ReactNode) {
+  export function usePageSetup(
+    title: string,
+    showFooter: boolean = false,
+    footerContent?: React.ReactNode
+  ) {
+    const { setTitle } = useHeaderTitle();
+    const { setShowFooter, setFooterContent } = useFooter();
+  
+    useEffect(() => {
+      setTitle(title);
+      setShowFooter(showFooter);
+  
+      if (footerContent !== undefined) {
+        setFooterContent(footerContent);
+      } else {
+        setFooterContent(null); // kosongkan konten, tapi area tetap muncul
+      }
+    }, [title, showFooter, footerContent, setTitle, setShowFooter, setFooterContent]);
+  }
+  
