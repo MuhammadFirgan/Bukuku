@@ -4,46 +4,59 @@ import { persediaan$ } from "../states/PesediaanState";
 import { stockEvents } from "../event/stock.event";
 
 
-export async function createBarang({nama_barang, harga_beli, harga_jual, keuntungan,  quantity}: PersediaanForm) {
+export async function createBarang({
+    nama_barang,
+    harga_beli,
+    harga_jual,
+    keuntungan,
+    quantity
+  }: PersediaanForm) {
     try {
-        const id = generateId();
-
-        //@ts-ignore
-        persediaan$[id].assign({
-            [id]: {
-                id,
-                nama_barang,
-                harga_jual,
-                harga_beli,
-                keuntungan: harga_jual - harga_beli,
-                quantity,
-                reset_date: 1,
-            }
-        });
-
+      const id = generateId();
+  
+      persediaan$.assign({
+        [id]: {
+          id,
+          nama_barang,
+          harga_jual: Number(harga_jual),
+          harga_beli: Number(harga_beli),
+          keuntungan: Number(harga_jual) - Number(harga_beli),
+          quantity: Number(quantity),
+          reset_date: 1,
+          created_at: new Date().toISOString()
+        }
+      });
+  
     } catch (error) {
-        console.error('Error creating barang:', error);
-        throw error;
+      console.error('Error creating barang:', error);
+      throw error;
     }
+  }
+  
 
-}
-
-export async function readBarang() {
+  export async function readBarang() {
     try {
-        const fetchingDataBarang = persediaan$.get() || {}
-        
-        const dataBarang = Object.entries(fetchingDataBarang).map(([id, item]) => ({
-            id,
-            ...item
+      const fetchingDataBarang = persediaan$.get() || {}
+  
+      const dataBarang = Object.entries(fetchingDataBarang)
+        .filter(([_, item]: any) => item && item.nama_barang && item.harga_beli && item.harga_jual)
+        .map(([id, item]: any) => ({
+          id,
+          ...item,
+          harga_beli: Number(item.harga_beli),
+          harga_jual: Number(item.harga_jual),
+          quantity: Number(item.quantity)
         }))
-        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()); 
+        .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
 
-        return dataBarang;
+      return dataBarang;
+  
     } catch (error) {
-        console.error('Error creating barang:', error);
-        throw error;
+      console.error('❌ Error creating barang:', error);
+      throw error;
     }
-}
+  }
+  
 
 
 

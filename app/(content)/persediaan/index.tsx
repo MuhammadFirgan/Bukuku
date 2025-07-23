@@ -56,7 +56,7 @@ export default function Index() {
     
       return () => {
         stockEvents.off(fetchData);
-      }; // <- ini yang kamu lupa tutup
+      }; 
     }, []);
     
 
@@ -77,16 +77,16 @@ export default function Index() {
       [listBarang]
     )
 
-    const validBarang = useMemo(() =>
-      listBarang.filter(
-        item =>
-          item &&
-          item.nama_barang &&
-          !isNaN(item.harga_jual - item.harga_beli)
-      ), [listBarang])
+
+    // const validBarang = useMemo(() =>
+    //   listBarang.filter(
+    //     item =>
+    //       item &&
+    //       item.nama_barang &&
+    //       !isNaN(item.harga_jual - item.harga_beli)
+    //   ), [listBarang])
 
 
-    console.log(totalMasuk)
     if (loading) {
       return (
         <View className="flex-1 justify-center items-center">
@@ -104,9 +104,11 @@ export default function Index() {
       )
     }
 
+
+
     // tinggal buat bagian modal
 return (
-    <View className='w-full '>
+    <View className='w-full flex-1'>
         <View className='flex flex-row flex-wrap -mt-14 px-7'>
             <CountCard 
                 label='Persediaan'
@@ -141,24 +143,24 @@ return (
                 onClose={() => setModalOpen(false)}
            />
         </View>
+        
         <View className='flex-1'>
-
-        </View>
-          <FlatList 
-              data={validBarang}
-              keyExtractor={(item) => item.id.toString()}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 50 }}
-              renderItem={({item}) => (
-                <ListItems 
-                    id={item.id}
-                    name={item.nama_barang}
-                    price={item.harga_jual - item.harga_beli}
-                    stock={item.quantity}
-                    
-                />
-              )}
+          <FlatList
+            data={listBarang}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={true}
+            contentContainerStyle={{ paddingBottom: 50 }}
+            renderItem={({ item }) => (
+              <ListItems
+                id={item.id}
+                name={item.nama_barang}
+                price={item.harga_jual - item.harga_beli}
+                stock={item.quantity}
+              />
+            )}
           />
+        </View>
+
 
         
     </View>
