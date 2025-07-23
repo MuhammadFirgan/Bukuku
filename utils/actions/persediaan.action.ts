@@ -1,6 +1,7 @@
 import { PersediaanForm } from "@/types";
 import { generateId } from "../SupaLegend";
 import { persediaan$ } from "../states/PesediaanState";
+import { stockEvents } from "../event/stock.event";
 
 
 export async function createBarang({nama_barang, harga_beli, harga_jual, keuntungan,  quantity}: PersediaanForm) {
@@ -44,15 +45,25 @@ export async function readBarang() {
     }
 }
 
-export function updateStock(
-    newStock: number,
-    id: any
-) {
-    try {
-        if (persediaan$[id]?.quantity) {
-            persediaan$[id].quantity.set(newStock)
-        }
-    } catch (error) {
-        console.error(error)
+
+
+export function updateBarangQuantity(barang_id: string, amount: number, type: 'in' | 'out') {
+  const current = persediaan$.get()?.[barang_id]
+
+  if (!current) return
+
+  const updatedQty = type === 'in'
+    ? current.quantity + amount
+    : current.quantity - amount
+
+  persediaan$.assign({
+    [barang_id]: {
+      ...current,
+      quantity: updatedQty,
     }
+
+    
+  })
+
+  stockEvents.emit() // agar komponen refresh
 }

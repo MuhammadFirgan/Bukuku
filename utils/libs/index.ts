@@ -3,7 +3,6 @@ import { useFooter } from "../context/FooterContext";
 import { useHeaderTitle } from "../context/HeaderContext";
 import { persediaan$ } from "../states/PesediaanState";
 import { stock$ } from "../states/stockState";
-import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter";
 
 
 const stockLogs = Object.values(stock$.get() ?? {});

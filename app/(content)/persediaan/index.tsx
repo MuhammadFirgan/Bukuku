@@ -37,22 +37,28 @@ export default function Index() {
     
   
     useEffect(() => {
-
       const fetchData = async () => {
         try {
-          setLoading(true)
-          const result = await readBarang()
-          setListBarang(result)
+          setLoading(true);
+          const result = await readBarang();
+          setListBarang(result);
         } catch (err) {
-          setError('Gagal memuat data barang')
-          console.error(err)
+          setError('Gagal memuat data barang');
+          console.error(err);
         } finally {
-          setLoading(false)
+          setLoading(false);
         }
-      }
-  
-      fetchData()
-    }, [])
+      };
+    
+      fetchData();
+    
+      stockEvents.on(fetchData);
+    
+      return () => {
+        stockEvents.off(fetchData);
+      }; // <- ini yang kamu lupa tutup
+    }, []);
+    
 
     const totalMasuk = useMemo(() =>
       stockList.filter(item => item.type === 'in')

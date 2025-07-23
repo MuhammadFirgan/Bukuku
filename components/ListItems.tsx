@@ -3,7 +3,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { ListItemsProps } from '@/types';
 import { useEffect, useState } from 'react';
 import EditFormLayout from './EditFormLayout';
-import { updateStock } from '@/utils/actions/persediaan.action';
+// import { updateStock } from '@/utils/actions/persediaan.action';
 import { updateStockWithLog } from '@/utils/actions/stock.action';
 
 export default function ListItems({ name, price, stock, id }: ListItemsProps) {
