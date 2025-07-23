@@ -107,6 +107,7 @@ export default function Index() {
 
 
     // tinggal buat bagian modal
+    // benerin tambah barang
 return (
     <View className='w-full flex-1'>
         <View className='flex flex-row flex-wrap -mt-14 px-7'>

@@ -13,19 +13,21 @@ export async function createBarang({
   }: PersediaanForm) {
     try {
       const id = generateId();
-  
-      persediaan$.assign({
-        [id]: {
-          id,
-          nama_barang,
-          harga_jual: Number(harga_jual),
-          harga_beli: Number(harga_beli),
-          keuntungan: Number(harga_jual) - Number(harga_beli),
-          quantity: Number(quantity),
-          reset_date: 1,
-          created_at: new Date().toISOString()
-        }
+        
+      // @ts-ignore
+      persediaan$[id].assign({
+        id,
+        nama_barang,
+        harga_jual: Number(harga_jual),
+        harga_beli: Number(harga_beli),
+        keuntungan: Number(harga_jual) - Number(harga_beli),
+        quantity: Number(quantity),
+        reset_date: 1,
+        created_at: new Date().toISOString()
+        
       });
+
+      stockEvents.emit();
   
     } catch (error) {
       console.error('Error creating barang:', error);
@@ -89,7 +91,7 @@ export function readBarangById(id: string) {
     }
 }
 
-export function editBarang(barang_id: string, harga_beli: number, harga_jual: number) {
+export function editHargaBarang(barang_id: string, harga_beli: number, harga_jual: number) {
     try {
       const current = persediaan$.get()?.[barang_id];
   
@@ -114,4 +116,6 @@ export function editBarang(barang_id: string, harga_beli: number, harga_jual: nu
       throw error;
     }
   }
+
+
   

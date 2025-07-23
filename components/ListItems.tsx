@@ -77,7 +77,7 @@ export default function ListItems({ name, price, stock, id }: ListItemsProps) {
 
         <View>
           <Text className='text-sm text-gray-700'>Keuntungan Satuan</Text>
-          <Text className='text-xl text-center'>Rp. {price}</Text>
+          <Text className={`text-xl text-center ${price < 0 ? 'text-red-500' : 'text-black'}`}>Rp. {price}</Text>
         </View>
       </TouchableOpacity>
 

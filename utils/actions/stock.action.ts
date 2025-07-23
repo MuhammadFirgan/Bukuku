@@ -3,7 +3,7 @@ import { stockEvents } from "../event/stock.event";
 import { persediaan$ } from "../states/PesediaanState";
 import { stock$ } from "../states/stockState";
 import { generateId } from "../SupaLegend";
-import { updateBarangQuantity } from "./persediaan.action";
+
 
 export async function updateStockWithLog(id: string, newQuantity: number) {
     const item = persediaan$.get()[id];
@@ -26,16 +26,14 @@ export async function updateStockWithLog(id: string, newQuantity: number) {
       amount: Math.abs(difference),
       created_at: new Date().toISOString(),
     });
-  
-    // Perbarui quantity barang
+
     persediaan$.assign({
       [id]: {
         ...item,
         quantity: newQuantity,
       },
     });
-  
-    // Emit event hanya sekali
+
     stockEvents.emit();
   }
 
