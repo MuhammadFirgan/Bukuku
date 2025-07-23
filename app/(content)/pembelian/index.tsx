@@ -31,7 +31,7 @@ export default function Index() {
             <AntDesign name="calendar" size={24} color="#22c55e" />
           </View>
 
- 
+          {/* dropdown masih tidak kelihatan */}
           <View className="flex-1">
             <Dropdown
               options={['PERIODE 1', 'PERIODE 2', 'PERIODE 3']}
