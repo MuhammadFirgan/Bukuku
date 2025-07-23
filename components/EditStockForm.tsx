@@ -1,6 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 
-export default function EditStockForm({ id, stockAwal }: { id?: string; stockAwal?: number }) {
+export default function EditStockForm({ id, namaBarang }: { id?: string; namaBarang?: string }) {
   if(!id) return null
 
   return (
@@ -25,16 +25,18 @@ export default function EditStockForm({ id, stockAwal }: { id?: string; stockAwa
           />
         </View>
       </View>
-      <View className='flex flex-col justify-end items-center gap-2'>
-        <Text>hahha</Text>
-        <Text className='text-red-500'>Gagal</Text>
-        <TouchableOpacity 
-        className='bg-primary text-center px-4 py-2 rounded-lg' 
-        // onPress={handleEditPrice}
-        >
-          <Text className='text-white'>Simpan</Text>
-        </TouchableOpacity>
-      </View>
+      {namaBarang && (
+        <View className='flex flex-col justify-end items-center gap-2'>
+          <Text>{namaBarang}</Text>
+          <Text className='text-red-500'>Gagal</Text>
+          <TouchableOpacity 
+          className='bg-primary text-center px-4 py-2 rounded-lg' 
+          // onPress={handleEditPrice}
+          >
+            <Text className='text-white'>Simpan</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   )
 }

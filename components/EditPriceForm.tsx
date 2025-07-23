@@ -5,19 +5,19 @@ import { router } from 'expo-router'
 
 type Props = {
   id?: string
+  namaBarang: string
 }
 
-export default function EditPriceForm({ id }: Props) {
+export default function EditPriceForm({ id, namaBarang }: Props) {
   const [hargaBeli, setHargaBeli] = useState('0')
   const [hargaJual, setHargaJual] = useState('0')
-  const [barang, setBarang] = useState<any | null>(null)
+
 
   useEffect(() => {
     if (!id) return
 
     const currentBarang = readBarangById(id)
     if (currentBarang) {
-      setBarang(currentBarang)
       setHargaBeli(String(currentBarang.harga_beli || 0))
       setHargaJual(String(currentBarang.harga_jual || 0))
     }
@@ -64,16 +64,18 @@ export default function EditPriceForm({ id }: Props) {
           />
         </View>
       </View>
-      <View className='flex flex-col justify-end items-center gap-2'>
-        <Text>{barang?.nama_barang}</Text>
-        <Text className='text-red-500'>Gagal</Text>
-        <TouchableOpacity 
-          className='bg-primary text-center px-4 py-2 rounded-lg' 
-          onPress={handleEditPrice}
-        >
-          <Text className='text-white'>Simpan</Text>
-        </TouchableOpacity>
-      </View>
+      {namaBarang && (
+        <View className='flex flex-col justify-end items-center gap-2'>
+          <Text>{namaBarang}</Text>
+          <Text className='text-red-500'>Gagal</Text>
+          <TouchableOpacity 
+            className='bg-primary text-center px-4 py-2 rounded-lg' 
+            onPress={handleEditPrice}
+          >
+            <Text className='text-white'>Simpan</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   )
 }
