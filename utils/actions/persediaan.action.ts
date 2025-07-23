@@ -58,8 +58,6 @@ export async function createBarang({
   }
   
 
-
-
 export function updateBarangQuantity(barang_id: string, amount: number, type: 'in' | 'out') {
   const current = persediaan$.get()?.[barang_id]
 
@@ -78,5 +76,42 @@ export function updateBarangQuantity(barang_id: string, amount: number, type: 'i
     
   })
 
-  stockEvents.emit() // agar komponen refresh
+  stockEvents.emit() 
 }
+
+export function readBarangById(id: string) {
+    try {
+        const barangById = persediaan$.get()?.[id]
+
+        return barangById
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export function editBarang(barang_id: string, harga_beli: number, harga_jual: number) {
+    try {
+      const current = persediaan$.get()?.[barang_id];
+  
+      if (!current) {
+        console.error('Barang tidak ditemukan:', barang_id);
+        return;
+      }
+  
+      persediaan$.assign({
+        [barang_id]: {
+          ...current,
+          harga_beli,
+          harga_jual,
+          keuntungan: harga_jual - harga_beli,
+        }
+      });
+  
+      stockEvents.emit(); 
+  
+    } catch (error) {
+      console.error('Gagal mengedit barang:', error);
+      throw error;
+    }
+  }
+  

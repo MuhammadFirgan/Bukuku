@@ -21,6 +21,7 @@ export interface ListItemsProps {
 }
 
 export interface ModalTrigger {
+    id?: string
     visible: boolean
     onClose: () => void
 }
