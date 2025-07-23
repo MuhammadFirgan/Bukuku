@@ -1,14 +1,45 @@
 import { View, Text, Pressable, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ModalLayout from './ModalLayout'
 import { ModalTrigger } from '@/types'
 import EditStockForm from './EditStockForm'
 import EditPriceForm from './EditPriceForm'
+import { editBarang, readBarangById } from '@/utils/actions/persediaan.action'
+import { router } from 'expo-router'
 
 
-export default function EditFormLayout({ visible, onClose }: ModalTrigger) {
+export default function EditFormLayout({ visible, onClose, id }: ModalTrigger) {
   const [mode, setMode] = useState<'stock' | 'harga'>('stock')
+  const [hargaBeli, setHargaBeli] = useState('0')
+  const [hargaJual, setHargaJual] = useState('0')
+  const [barang, setBarang] = useState<any | null>(null)
 
+  const handleEditPrice = () => {
+    if (!id) return
+
+    // Validasi input
+    const beli = parseInt(hargaBeli, 10)
+    const jual = parseInt(hargaJual, 10)
+
+    if (isNaN(beli) || isNaN(jual)) {
+      console.warn('Harga tidak valid')
+      return
+    }
+
+    editBarang(id, beli, jual)
+    router.push('/persediaan')
+  }
+
+  useEffect(() => {
+    if (!id) return
+    const currentBarang = readBarangById(id)
+    if (currentBarang) {
+
+      setBarang(currentBarang)
+      setHargaBeli(String(currentBarang.harga_beli || 0))
+      setHargaJual(String(currentBarang.harga_jual || 0))
+    } 
+  }, [id])
   return (
     <ModalLayout
       headerTitle='Tambah Stock'
@@ -35,17 +66,27 @@ export default function EditFormLayout({ visible, onClose }: ModalTrigger) {
         {/* Form Content */}
         <View className='flex flex-row justify-center gap-4 px-4 mt-8'>
           <View className="flex flex-col gap-4">
-            {mode === 'stock' && <EditStockForm />}
-            {mode === 'harga' && <EditPriceForm />}
+            {mode === 'stock' && <EditStockForm id={id}/>}
+            {mode === 'harga' && 
+              <EditPriceForm
+              id={id}
+              hargaBeli={hargaBeli}
+              hargaJual={hargaJual}
+              setHargaBeli={setHargaBeli}
+              setHargaJual={setHargaJual}
+            />
+            }
           </View>
 
-          <View className='flex flex-col justify-end items-center gap-2'>
-            <Text>Indomie Aceh</Text>
-            <Text className='text-red-500'>Gagal</Text>
-            <TouchableOpacity className='bg-primary text-center px-4 py-2 rounded-lg'>
-              <Text className='text-white'>Simpan</Text>
-            </TouchableOpacity>
-          </View>
+          {barang && (
+            <View className='flex flex-col justify-end items-center gap-2'>
+              <Text>{barang.nama_barang}</Text>
+              <Text className='text-red-500'>Gagal</Text>
+              <TouchableOpacity className='bg-primary text-center px-4 py-2 rounded-lg' onPress={handleEditPrice}>
+                <Text className='text-white'>Simpan</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </ModalLayout>

@@ -83,6 +83,7 @@ export default function ListItems({ name, price, stock, id }: ListItemsProps) {
 
       <EditFormLayout
         visible={isModalOpen}
+        id={id}
         onClose={() => setIsModalOpen(false)}
       />
     </View>
