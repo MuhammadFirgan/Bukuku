@@ -2,11 +2,12 @@ import CountCard from '@/components/CountCard'
 import CreateFormLayout from '@/components/CreateFormLayout'
 import ListItems from '@/components/ListItems'
 import { readBarang } from '@/utils/actions/persediaan.action'
+import { readStock } from '@/utils/actions/stock.action'
+import { stockEvents } from '@/utils/event/stock.event'
 import { totalMasuk, usePageSetup } from '@/utils/libs'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { View, TextInput, FlatList, TouchableOpacity, Text, ActivityIndicator } from 'react-native'
-
 
 export default function Index() {
 
@@ -14,8 +15,26 @@ export default function Index() {
     const [listBarang, setListBarang] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
+    const [stockList, setStockList] = useState<any[]>([]);
 
-    usePageSetup('Persediaan', null)
+    usePageSetup('Persediaan', false)
+
+    const fetchStock = () => {
+      const result = readStock()
+      if (!result) return
+      const sorted = Object.values(result)
+        .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      setStockList(sorted)
+    }
+  
+    useEffect(() => {
+      fetchStock()
+      stockEvents.on(fetchStock)
+      return () => {
+        stockEvents.off(fetchStock)
+      }
+    }, [])
+    
   
     useEffect(() => {
 
@@ -34,14 +53,34 @@ export default function Index() {
   
       fetchData()
     }, [])
-    const totalQuantity = listBarang.reduce((total, item) => total + Number(item.quantity || 0), 0)
-    const validBarang = listBarang.filter(
-      item =>
-        item &&
-        item.nama_barang &&
-        !isNaN(item.harga_jual - item.harga_beli)
-    );
 
+    const totalMasuk = useMemo(() =>
+      stockList.filter(item => item.type === 'in')
+        .reduce((acc, item) => acc + (item.amount || 0), 0),
+      [stockList]
+    )
+  
+    const totalKeluar = useMemo(() =>
+      stockList.filter(item => item.type === 'out')
+        .reduce((acc, item) => acc + (item.amount || 0), 0),
+      [stockList]
+    )
+
+    const totalQuantity = useMemo(() =>
+      listBarang.reduce((total, item) => total + Number(item.quantity || 0), 0),
+      [listBarang]
+    )
+
+    const validBarang = useMemo(() =>
+      listBarang.filter(
+        item =>
+          item &&
+          item.nama_barang &&
+          !isNaN(item.harga_jual - item.harga_beli)
+      ), [listBarang])
+
+
+    console.log(totalMasuk)
     if (loading) {
       return (
         <View className="flex-1 justify-center items-center">
@@ -77,7 +116,7 @@ return (
             />
             <CountCard 
                 label='Barang Keluar'
-                value='123'
+                value={totalKeluar}
             />
             
         </View>
@@ -101,7 +140,7 @@ return (
         </View>
           <FlatList 
               data={validBarang}
-              keyExtractor={(item) => item.nama}
+              keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ paddingBottom: 50 }}
               renderItem={({item}) => (

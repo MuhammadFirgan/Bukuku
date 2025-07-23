@@ -1,3 +1,5 @@
+
+import { stockEvents } from "../event/stock.event";
 import { persediaan$ } from "../states/PesediaanState";
 import { stock$ } from "../states/stockState";
 import { generateId } from "../SupaLegend";
@@ -27,4 +29,20 @@ export async function updateStockWithLog(id: string, newQuantity: number) {
         amount: Math.abs(difference),
       
     });
+
+    stockEvents.emit();
 }
+
+export function readStock() {
+    try {
+        
+        const dataStock = stock$.get()
+
+        return dataStock
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+
