@@ -41,3 +41,17 @@ export interface PersediaanForm {
     quantity?: number;
     reset_date?: number;
 }
+
+export type StockLog = {
+    barang_id: string
+    type: 'in' | 'out'
+    amount: number
+  }
+
+export type HistoryItem = {
+    id: string;
+    nama_barang: string;
+    amount: number;
+    harga_jual: number;
+    subtotal: number;
+}

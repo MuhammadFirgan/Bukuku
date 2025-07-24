@@ -1,19 +1,26 @@
 import { View, Text } from 'react-native'
 
-export default function ListPenjualan() {
+type Props = {
+  nama_barang: string;
+  amount: number;
+  harga_jual: number;
+  // harga_beli: number;
+}
+
+export default function ListPenjualan({ nama_barang, amount, harga_jual }: Props) {
   return (
     <View className='p-5 flex flex-row justify-between items-center border-b border-gray-300'>
       <View className='flex w-[30%]'>
-        <Text className='font-semibold' numberOfLines={1} ellipsizeMode="tail">Indomie Aceh</Text>
-        <Text className='text-gray-400'>Terjual : 26</Text>
+        <Text className='font-semibold' numberOfLines={1} ellipsizeMode="tail">{nama_barang}</Text>
+        <Text className='text-gray-400'>Terjual : {amount}</Text>
       </View>
       <View className='flex items-center'>
         <Text className='text-gray-500'>Harga Satuan</Text>
-        <Text className='text-red-500'>2.900</Text>
+        <Text className='text-red-500'>{harga_jual.toLocaleString('id-ID')}</Text>
       </View>
       <View className='flex items-center'>
         <Text className='text-gray-500'>Keuntungan</Text>
-        <Text className='text-primary'>Rp 123.456.789</Text>
+        <Text className='text-primary'>Rp {(harga_jual * amount).toLocaleString('id-ID')}</Text>
       </View>
     </View>
   )

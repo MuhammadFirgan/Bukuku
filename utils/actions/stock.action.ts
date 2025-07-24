@@ -40,9 +40,11 @@ export async function updateStockWithLog(id: string, newQuantity: number) {
 export function readStock() {
     try {
         
-        const dataStock = stock$.get()
-
-        return dataStock
+      const rawData = stock$.get();
+      const items = Object.values(rawData || {}).filter((v: any) =>
+        v?.barang_id && v?.type && typeof v.amount === 'number'
+      );
+      return { items };
     } catch (error) {
         console.error(error)
     }
