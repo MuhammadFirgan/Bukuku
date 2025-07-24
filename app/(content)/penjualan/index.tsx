@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { readBarang } from '@/utils/actions/persediaan.action';
 import { readStock } from '@/utils/actions/stock.action';
 import { HistoryItem, StockLog } from '@/types';
+import HistoryLayout from '@/components/HistoryLayout';
 
 export default function Index() {
   const [totalPenjualan, setTotalPenjualan] = useState<number>(0);
@@ -30,14 +31,12 @@ export default function Index() {
         const keluarLogs = logBarang.filter((log: StockLog) => log.type === 'out');
         const masukLogs = logBarang.filter((log: StockLog) => log.type === 'in');
 
-        // Hitung total keluar dan masuk
         const totalKeluar = keluarLogs.reduce((sum, log) => sum + (log.amount ?? 0), 0);
         const totalMasuk = masukLogs.reduce((sum, log) => sum + (log.amount ?? 0), 0);
 
         penjualan += totalKeluar * barang.harga_jual;
         pengeluaran += totalMasuk * barang.harga_beli;
 
-        // Gabungkan history berdasarkan barang_id
         if (keluarLogs.length > 0) {
           if (historyMap[barang.id]) {
             historyMap[barang.id].amount += totalKeluar;
@@ -109,7 +108,14 @@ export default function Index() {
         </View>
       </View>
 
-      <View className='relative'>
+      <HistoryLayout 
+        width={width}
+        boxWidth={boxWidth}
+        totalPenjualan={totalPenjualan}
+        historyPenjualan={historyPenjualan}
+      />
+
+      {/* <View className='relative'>
         <View className='absolute top-1/2 h-[400px] z-50 py-5 bg-white rounded-lg' style={{
           width: boxWidth,
           left: width / 2,
@@ -140,7 +146,7 @@ export default function Index() {
             }
           />
         </View>
-      </View>
+      </View> */}
     </View>
   )
 }
