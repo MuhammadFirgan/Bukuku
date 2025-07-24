@@ -22,24 +22,31 @@ export const totalKeluar = stockLogs
   .reduce((acc, log) => acc + log.amount, 0);
 
 
-  export function usePageSetup(
-    title: string,
-    showFooter: boolean = false,
-    footerContent?: React.ReactNode
-  ) {
-    const { setTitle } = useHeaderTitle();
-    const { setShowFooter, setFooterContent } = useFooter();
-  
-    useEffect(() => {
- 
-      setTitle(title);
-      setShowFooter(showFooter);
-  
-      if (footerContent !== undefined) {
-        setFooterContent(footerContent);
-      } else {
-        setFooterContent(null); 
-      }
-    }, [title, showFooter, footerContent, setTitle, setShowFooter, setFooterContent]);
-  }
+export function usePageSetup(
+  title: string,
+  showFooter: boolean = false,
+  footerContent?: React.ReactNode
+) {
+  const { setTitle } = useHeaderTitle();
+  const { setShowFooter, setFooterContent } = useFooter();
+
+  useEffect(() => {
+
+    setTitle(title);
+    setShowFooter(showFooter);
+
+    if (footerContent !== undefined) {
+      setFooterContent(footerContent);
+    } else {
+      setFooterContent(null); 
+    }
+  }, [title, showFooter, footerContent, setTitle, setShowFooter, setFooterContent]);
+}
+
+export const formatRupiah = (value: number): string =>
+  new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(value);
   
