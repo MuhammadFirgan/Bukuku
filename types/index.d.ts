@@ -51,7 +51,16 @@ export type StockLog = {
 export type HistoryItem = {
     id: string;
     nama_barang: string;
+    barang_id: string
     amount: number;
     harga_jual: number;
     subtotal: number;
 }
+
+export type Barang = {
+    id: string;
+    nama_barang: string;
+    harga_jual: number;
+    harga_beli: number;
+  };
+ 
