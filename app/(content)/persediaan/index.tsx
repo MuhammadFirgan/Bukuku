@@ -21,11 +21,14 @@ export default function Index() {
 
     const fetchStock = () => {
       const result = readStock()
+      console.log('keluar : ',result?.items)
+  
       if (!result) return
-      const sorted = Object.values(result)
+      const sorted = Object.values(result.items)
         .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       setStockList(sorted)
     }
+
   
     useEffect(() => {
       fetchStock()
@@ -65,12 +68,16 @@ export default function Index() {
         .reduce((acc, item) => acc + (item.amount || 0), 0),
       [stockList]
     )
+
+    
   
     const totalKeluar = useMemo(() =>
       stockList.filter(item => item.type === 'out')
         .reduce((acc, item) => acc + (item.amount || 0), 0),
       [stockList]
     )
+
+    
 
     const totalQuantity = useMemo(() =>
       listBarang.reduce((total, item) => total + Number(item.quantity || 0), 0),
