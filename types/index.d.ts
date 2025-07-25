@@ -46,6 +46,7 @@ export type StockLog = {
     barang_id: string
     type: 'in' | 'out'
     amount: number
+    created_at?: string
   }
 
 export type HistoryItem = {
