@@ -15,6 +15,7 @@ export const persediaan$ = observable(
         },
         retry: {
             infinite: true
-        }
+        },
+        
     })
 )
