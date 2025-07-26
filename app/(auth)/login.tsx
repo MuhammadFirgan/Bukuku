@@ -21,7 +21,7 @@ export default function Login() {
 
 
       auth$.session.set(dataLogin.session)
-      console.log("user id : ", auth$.session.get()?.user.id)
+      
       router.push('/')
     } catch (error: any) {
       Alert.alert('Error', error.message)

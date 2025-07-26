@@ -38,16 +38,24 @@ export async function updateStockWithLog(id: string, newQuantity: number) {
   }
 
 export function readStock() {
-    try {
-        
-      const rawData = stock$.get();
-      const items = Object.values(rawData || {}).filter((v: any) =>
-        v?.barang_id && v?.type && typeof v.amount === 'number'
-      );
-      return { items };
-    } catch (error) {
-        console.error(error)
-    }
+  try {
+    const fetchingDataStock = stock$.get() || {};
+    const dataStock = {
+      items: Object.entries(fetchingDataStock)
+        .map(([id, item]: any) => ({
+          id,
+          ...item,
+          amount: Number(item.amount),
+        }))
+        .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()),
+    };
+
+    console.log('Data stok dari stock_log:', dataStock.items.length, dataStock.items); // Log untuk debugging
+    return dataStock;
+  } catch (error) {
+    console.error('❌ Error reading stock:', error);
+    throw error;
+  }
 }
 
 
