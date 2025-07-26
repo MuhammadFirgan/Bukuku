@@ -21,7 +21,7 @@ export default function Index() {
 
     const fetchStock = () => {
       const result = readStock()
-      console.log('keluar : ',result?.items)
+
   
       if (!result) return
       const sorted = Object.values(result.items)

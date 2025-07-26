@@ -19,7 +19,9 @@ export default function Login() {
     try {
       const dataLogin = await login(form.username, form.password)
 
+
       auth$.session.set(dataLogin.session)
+      console.log("user id : ", auth$.session.get()?.user.id)
       router.push('/')
     } catch (error: any) {
       Alert.alert('Error', error.message)
