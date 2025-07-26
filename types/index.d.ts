@@ -60,8 +60,14 @@ export type HistoryItem = {
 
 export type Barang = {
     id: string;
-    nama_barang: string;
-    harga_jual: number;
-    harga_beli: number;
+  user_id?: string;
+  nama_barang: string;
+  harga_beli: number;
+  harga_jual: number;
+  keuntungan?: number;
+  quantity: number;
+  reset_date?: number;
+  created_at?: string;
+  updated_at?: string;
   };
  
