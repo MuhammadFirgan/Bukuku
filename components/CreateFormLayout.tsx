@@ -17,7 +17,6 @@ export default function CreateFormLayout({visible, onClose}: ModalTrigger) {
             nama_barang: namaBarang,
             harga_beli: hargaBeli,
             harga_jual: hargaJual,
-            keuntungan: hargaJual - hargaBeli,
             quantity: 1
         })
 

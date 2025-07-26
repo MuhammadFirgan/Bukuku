@@ -1,4 +1,4 @@
-import { Barang, PersediaanForm } from "@/types";
+import { Barang, CreateBarangInput, PersediaanForm } from "@/types";
 import { generateId, supabase } from "../SupaLegend";
 import { persediaan$ } from "../states/PesediaanState";
 import { stockEvents } from "../event/stock.event";
@@ -43,7 +43,7 @@ import { history$ } from "../states/historyState";
 //     }
 //   }
 
-export async function createBarang(data: Barang) {
+export async function createBarang(data: CreateBarangInput) {
   try {
     const barangId = generateId(); // Buat ID lokal untuk offline
     const now = new Date().toISOString();

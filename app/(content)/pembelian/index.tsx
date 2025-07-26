@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { usePageSetup } from '@/utils/libs';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -9,7 +9,7 @@ import { readStock } from '@/utils/actions/stock.action';
 import { groupByWeekFromDate, mergeStockLogsByDay } from '@/utils/libs/groupPurchases';
 
 // Tanggal mulai untuk periode pertama (Juli 2025)
-const BASE_START_DATE = new Date('2025-07-25');
+const BASE_START_DATE = new Date('2025-07-25'); // Mulai dari 1 Juli untuk keselarasan bulan
 
 export default function Index() {
   const [periode, setPeriode] = useState('PERIODE 1');
@@ -27,6 +27,7 @@ export default function Index() {
         const stockData = await readStock()?.items ?? [];
         setBarang(barangData);
         setStock(stockData);
+        console.log('Fetched barang:', barangData.length, 'stock:', stockData.length);
       } catch (error) {
         console.error('❌ Error fetching data:', error);
       }
@@ -36,19 +37,29 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
-    // Sesuaikan startDate berdasarkan periode yang dipilih
+    // Tentukan rentang tanggal untuk periode yang dipilih
     const startDate = new Date(BASE_START_DATE);
     startDate.setMonth(BASE_START_DATE.getMonth() + monthIndex);
+    const endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1);
 
-    const mergedLogs = mergeStockLogsByDay(stock, barang);
+    // Filter stock berdasarkan periode
+    const filteredStock = stock.filter((log) => {
+      if (!log.created_at) return false;
+      const logDate = new Date(log.created_at);
+      return logDate >= startDate && logDate < endDate && log.type === 'in';
+    });
+
+    console.log(`Filtered stock untuk ${periode}:`, filteredStock.length);
+
+    // Proses data untuk periode yang dipilih
+    const mergedLogs = mergeStockLogsByDay(filteredStock, barang);
     const result = groupByWeekFromDate(mergedLogs, barang, startDate);
     setWeeks(result);
 
     // Hitung total pengeluaran untuk periode yang dipilih
     const calculateTotalPengeluaran = () => {
       let total = 0;
-
-      // Jumlahkan biaya dari semua entri dalam weeks
       result.forEach((week) => {
         week.forEach((day) => {
           if (day.biaya !== '-') {
@@ -56,7 +67,6 @@ export default function Index() {
           }
         });
       });
-
       setTotalPengeluaran(total);
       console.log(`Total pengeluaran untuk ${periode}: Rp ${total.toLocaleString('id-ID')}`);
     };
@@ -100,27 +110,31 @@ export default function Index() {
       </View>
 
       <ScrollView className="mt-4 pb-36 h-full mb-40">
-        {weeks.map((week, idx) => (
-          <View key={idx} className="flex flex-col gap-3 bg-white p-4">
-            <Text className="text-xl font-semibold px-3">Minggu Ke-{idx + 1}</Text>
+        {weeks.length > 0 ? (
+          weeks.map((week, idx) => (
+            <View key={idx} className="flex flex-col gap-3 bg-white p-4">
+              <Text className="text-xl font-semibold px-3">Minggu Ke-{idx + 1}</Text>
 
-            <View className="flex flex-row justify-between px-2">
-              <Text className="text-xs w-1/3 font-bold">Jenis Pembelian</Text>
-              <Text className="text-xs w-1/3 font-bold">Unit Pembelian</Text>
-              <Text className="text-xs w-1/3 font-bold">Biaya Pembelian</Text>
-            </View>
-
-            {week.map((day, dayIdx) => (
-              <View key={dayIdx} className="flex flex-row justify-between px-2 py-1 border-b border-gray-100">
-                <Text className="text-xs w-1/3 text-gray-700">{day.jenis}</Text>
-                <Text className="text-xs w-1/3 text-gray-700">{day.unit}</Text>
-                <Text className="text-xs w-1/3 text-gray-700">
-                  {day.biaya === '-' ? '-' : `Rp ${Number(day.biaya).toLocaleString('id-ID')}`}
-                </Text>
+              <View className="flex flex-row justify-between px-2">
+                <Text className="text-xs w-1/3 font-bold">Jenis Pembelian</Text>
+                <Text className="text-xs w-1/3 font-bold">Unit Pembelian</Text>
+                <Text className="text-xs w-1/3 font-bold">Biaya Pembelian</Text>
               </View>
-            ))}
-          </View>
-        ))}
+
+              {week.map((day, dayIdx) => (
+                <View key={dayIdx} className="flex flex-row justify-between px-2 py-1 border-b border-gray-100">
+                  <Text className="text-xs w-1/3 text-gray-700">{day.jenis}</Text>
+                  <Text className="text-xs w-1/3 text-gray-700">{day.unit}</Text>
+                  <Text className="text-xs w-1/3 text-gray-700">
+                    {day.biaya === '-' ? '-' : `Rp ${Number(day.biaya).toLocaleString('id-ID')}`}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          ))
+        ) : (
+          <Text className="text-center text-gray-400 mt-4">Tidak ada data pembelian untuk periode ini</Text>
+        )}
       </ScrollView>
     </View>
   );
