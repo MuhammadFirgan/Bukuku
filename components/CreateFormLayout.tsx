@@ -24,22 +24,6 @@ export default function CreateFormLayout({visible, onClose}: ModalTrigger) {
         router.push('/persediaan')
     }
 
-    // useEffect(() => {
-    //     const all = persediaan$.get()
-    //     Object.entries(all).forEach(([id, value]) => {
-    //       const syncMeta = persediaan$.$meta?.sync?.[id]
-    //       console.log(
-    //         `🧾 ID: ${id}`,
-    //         `\n📦 Data: ${JSON.stringify(value, null, 2)}`,
-    //         `\n🔁 Status: ${syncMeta?.pending ? '⏳ PENDING' : '✅ SYNCED'}`
-    //       )
-    //     })
-    //   }, [])
-      
-
-     
-      
-      
 
     
   return (
