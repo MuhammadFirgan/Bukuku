@@ -1,10 +1,10 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import ModalLayout from './ModalLayout'
 import { ModalTrigger } from '@/types'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createBarang } from '@/utils/actions/persediaan.action'
 import { router } from 'expo-router'
-import { persediaan$ } from '@/utils/states/PesediaanState'
+
 
 
 export default function CreateFormLayout({visible, onClose}: ModalTrigger) {
@@ -17,7 +17,6 @@ export default function CreateFormLayout({visible, onClose}: ModalTrigger) {
             nama_barang: namaBarang,
             harga_beli: hargaBeli,
             harga_jual: hargaJual,
-            keuntungan: hargaJual - hargaBeli,
             quantity: 1
         })
 

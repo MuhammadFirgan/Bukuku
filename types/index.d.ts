@@ -70,4 +70,11 @@ export type Barang = {
   created_at?: string;
   updated_at?: string;
   };
+
+  export interface CreateBarangInput {
+    nama_barang: string;
+    harga_beli: number;
+    harga_jual: number;
+    quantity: number;
+  }
  

@@ -1,12 +1,20 @@
 import { View, Text, TextInput, Dimensions } from 'react-native';
 import { usePageSetup } from '@/utils/libs';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { readBarang } from '@/utils/actions/persediaan.action';
 import { readStock } from '@/utils/actions/stock.action';
 import { Barang, StockLog } from '@/types';
 import HistoryLayout from '@/components/HistoryLayout';
-import { createHistory } from '@/utils/actions/history.action';
+
+// Fungsi debounce manual
+const debounce = (func: (query: string) => void, delay: number) => {
+  let timeoutId: number | undefined;
+  return (query: string) => {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(query), delay);
+  };
+};
 
 export default function Index() {
   const [totalPenjualan, setTotalPenjualan] = useState<number>(0);
@@ -14,15 +22,13 @@ export default function Index() {
   const [totalKeuntungan, setTotalKeuntungan] = useState<number>(0);
   const [barangList, setBarangList] = useState<Barang[]>([]);
   const [stockList, setStockList] = useState<StockLog[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     const computeKeuangan = async () => {
       try {
         const barang = await readBarang();
         const stock = (await readStock())?.items ?? [];
-
-        console.log('Barang di useEffect:', barang.length, barang); // Log untuk debugging
-        console.log('Stock di useEffect:', stock.length, stock); // Log untuk debugging
 
         setBarangList(barang);
         setStockList(stock);
@@ -40,8 +46,6 @@ export default function Index() {
 
           penjualan += totalKeluar * b.harga_jual;
           pengeluaran += totalMasuk * b.harga_beli;
-
-          console.log(`Barang ${b.nama_barang}: Keluar=${totalKeluar}, Masuk=${totalMasuk}`); // Log untuk debugging
         });
 
         setTotalPenjualan(penjualan);
@@ -54,6 +58,23 @@ export default function Index() {
 
     computeKeuangan();
   }, []);
+
+  // Filter barang berdasarkan searchQuery
+  const filteredBarangList = useMemo(() => {
+    if (!searchQuery.trim()) return barangList;
+    const query = searchQuery.toLowerCase();
+    return barangList.filter((item) =>
+      item.nama_barang?.toLowerCase().includes(query)
+    );
+  }, [barangList, searchQuery]);
+
+  // Handler untuk search dengan debounce
+  const handleSearchChange = useCallback(
+    debounce((query: string) => {
+      setSearchQuery(query);
+    }, 300),
+    [] // eslint-disable-line react-hooks/exhaustive-deps
+  );
 
   usePageSetup('Penjualan', true);
   const { width } = Dimensions.get('window');
@@ -105,8 +126,9 @@ export default function Index() {
             className="absolute top-1/2 -translate-y-1/2 left-3 z-50"
           />
           <TextInput
-            className="border border-gray-400 w-72 rounded-xl placeholder:pl-10 bg-white"
+            className="border border-gray-400 w-72 rounded-xl pl-10 pr-2 py-1 bg-white"
             placeholder="Search..."
+            onChangeText={handleSearchChange}
           />
         </View>
       </View>
@@ -115,7 +137,7 @@ export default function Index() {
       <HistoryLayout
         width={width}
         boxWidth={boxWidth}
-        barangList={barangList}
+        barangList={filteredBarangList}
         stockList={stockList}
       />
     </View>
