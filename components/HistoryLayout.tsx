@@ -1,9 +1,9 @@
-import { View, Text, FlatList } from 'react-native';
-import React, { useEffect, useState } from 'react';
 import { Barang, HistoryItem, StockLog } from '@/types';
-import ListPenjualan from './ListPenjualan';
 import { createHistory } from '@/utils/actions/history.action';
 import { generateId } from '@/utils/SupaLegend';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import ListPenjualan from './ListPenjualan';
 
 type Props = {
   width: number;
@@ -20,7 +20,7 @@ export default function HistoryLayout({ width, boxWidth, barangList, stockList }
     let historyMap: Record<string, HistoryItem> = {};
     let total = 0;
 
-    console.log('Processing history - Barang:', barangList.length, 'Stock:', stockList.length); // Log untuk debugging
+   
 
     barangList.forEach((barang) => {
       const logBarang = stockList.filter((log) => log.barang_id === barang.id);

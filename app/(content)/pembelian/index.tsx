@@ -27,7 +27,6 @@ export default function Index() {
         const stockData = await readStock()?.items ?? [];
         setBarang(barangData);
         setStock(stockData);
-        console.log('Fetched barang:', barangData.length, 'stock:', stockData.length);
       } catch (error) {
         console.error('❌ Error fetching data:', error);
       }
@@ -50,7 +49,7 @@ export default function Index() {
       return logDate >= startDate && logDate < endDate && log.type === 'in';
     });
 
-    console.log(`Filtered stock untuk ${periode}:`, filteredStock.length);
+   
 
     // Proses data untuk periode yang dipilih
     const mergedLogs = mergeStockLogsByDay(filteredStock, barang);
@@ -68,7 +67,7 @@ export default function Index() {
         });
       });
       setTotalPengeluaran(total);
-      console.log(`Total pengeluaran untuk ${periode}: Rp ${total.toLocaleString('id-ID')}`);
+    
     };
 
     calculateTotalPengeluaran();

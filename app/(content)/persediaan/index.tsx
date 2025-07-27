@@ -79,7 +79,7 @@ export default function Index() {
   const handleSearchChange = useCallback(
     debounce((query: string) => {
       setSearchQuery(query);
-      console.log('Pencarian dengan query:', query);
+    
     }, 300),
     [] // eslint-disable-line react-hooks/exhaustive-deps
   );
