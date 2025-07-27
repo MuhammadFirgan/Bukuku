@@ -1,10 +1,10 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import ModalLayout from './ModalLayout'
 import { ModalTrigger } from '@/types'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createBarang } from '@/utils/actions/persediaan.action'
 import { router } from 'expo-router'
-import { persediaan$ } from '@/utils/states/PesediaanState'
+
 
 
 export default function CreateFormLayout({visible, onClose}: ModalTrigger) {
