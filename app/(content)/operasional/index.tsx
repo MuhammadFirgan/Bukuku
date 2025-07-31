@@ -5,6 +5,7 @@ import Dropdown from '@/components/Dropdown';
 
 export default function Index() {
     const [periode, setPeriode] = useState('PERIODE 1')
+
     const currentAmount = 2325000; // Rp 2.325.000
     const totalAmount = 3500000; // Rp 3.500.000
     const percentage = (currentAmount / totalAmount) * 100;
@@ -74,4 +75,5 @@ export default function Index() {
             </ScrollView>
         </View>
     )
+
 }
