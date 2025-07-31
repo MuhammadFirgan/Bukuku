@@ -6,18 +6,20 @@ interface DropdownProps {
   options: string[]
   onSelect: (value: string) => void
   selected?: string
+  dropdownWidth?: string
+  optionalBgColor?: string
 }
 
-export default function Dropdown({ label, options, onSelect, selected }: DropdownProps) {
+export default function Dropdown({ label, options, onSelect, selected, dropdownWidth, optionalBgColor }: DropdownProps) {
   const [open, setOpen] = useState(false)
 
   return (
-    <View className="relative w-full">
+    <View className={`relative ${dropdownWidth ? dropdownWidth : 'w-full'}`}>
       {label && <Text className="mb-1 text-sm text-gray-600">{label}</Text>}
 
       <Pressable
         onPress={() => setOpen(true)}
-        className="border border-white p-3 rounded-lg bg-primary"
+        className={`border border-white p-3 rounded-lg ${optionalBgColor ? optionalBgColor : 'bg-primary'}`}
       >
         <Text className="text-white font-semibold text-center">{selected || 'Pilih salah satu'}</Text>
       </Pressable>
