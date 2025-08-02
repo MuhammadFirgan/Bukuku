@@ -1,14 +1,19 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { usePageSetup } from '@/utils/libs';
 import Dropdown from '@/components/Dropdown';
+import { readFunds } from '@/utils/actions/operational.action';
+import ModalLayout from '@/components/ModalLayout';
+import EditFundsForm from '@/components/EditFundsForm';
 
 export default function Index() {
     const [periode, setPeriode] = useState('PERIODE 1')
+    const [modalOpen, setModalOpen] = useState(false)
 
     const currentAmount = 2325000; // Rp 2.325.000
     const totalAmount = 3500000; // Rp 3.500.000
     const percentage = (currentAmount / totalAmount) * 100;
+ 
 
     usePageSetup('Operasional', true, 
         <View className='bg-white mx-4 p-4 -mt-8 rounded-lg flex flex-row justify-between items-center'>
@@ -23,9 +28,10 @@ export default function Index() {
     return (
         <View className='mx-4 flex-1'>
             <View className='px-6 py-5 bg-white -mt-10 rounded-lg'>
-                <View className='flex flex-row justify-between items-center'>
-                    <View>
-                        <Text>Operasional</Text>
+                <View className='flex flex-col gap-3'>
+                    <EditFundsForm />
+                    <View >
+                        <Text>Dana Operasional saat ini</Text>
                         <Text>Rp {currentAmount} dari {totalAmount}</Text>
                         <View className='w-3/4 h-1 bg-gray-200 mt-2 rounded-full overflow-hidden flex-row'>
                             <View
@@ -39,11 +45,7 @@ export default function Index() {
                             />
                         </View>
                     </View>
-                    <View>
-                        <TouchableOpacity className='bg-primary px-4 py-1 rounded-lg'>
-                            <Text className='text-white'>Edit</Text>
-                        </TouchableOpacity>
-                    </View>
+                    
                 </View>
             </View>
 
