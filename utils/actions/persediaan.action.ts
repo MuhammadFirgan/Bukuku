@@ -1,55 +1,16 @@
-import { Barang, CreateBarangInput, PersediaanForm } from "@/types";
-import { generateId, supabase } from "../SupaLegend";
+import { CreateBarangInput } from "@/types";
+import { generateId } from "../SupaLegend";
 import { persediaan$ } from "../states/PesediaanState";
 import { stockEvents } from "../event/stock.event";
-import { auth$ } from "../states/authState";
+
 import { stock$ } from "../states/stockState";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { history$ } from "../states/historyState";
 
 
-// export async function createBarang({
-//     nama_barang,
-//     harga_beli,
-//     harga_jual,
-//     quantity
-//   }: PersediaanForm) {
-//     try {
-//       const id = generateId();
-//       const userId = auth$.session.get()?.user.id
-      
-//       // @ts-ignore
-//       persediaan$[id].assign({
-//         id,
-//         user_id: userId,
-//         nama_barang,
-//         harga_jual: Number(harga_jual),
-//         harga_beli: Number(harga_beli),
-//         keuntungan: Number(harga_jual) - Number(harga_beli),
-//         quantity: Number(quantity),
-//         reset_date: 1,
-//         created_at: new Date().toISOString(),
-//         updated_at: new Date().toISOString()
-//       });
-
-      
-
-//       stockEvents.emit();
-
-  
-//     } catch (error) {
-//       console.error('Error creating barang:', error);
-//       throw error;
-//     }
-//   }
 
 export async function createBarang(data: CreateBarangInput) {
   try {
     const barangId = generateId(); // Buat ID lokal untuk offline
     const now = new Date().toISOString();
-
-    // Ambil state saat ini untuk digabungkan
-    const currentPersediaan = persediaan$.get() || {};
 
     // Tambahkan barang baru tanpa menimpa data sebelumnya
     persediaan$.assign({
@@ -65,8 +26,6 @@ export async function createBarang(data: CreateBarangInput) {
       },
     });
 
-    // Ambil state stok saat ini
-    const currentStock = stock$.get() || {};
     
     // Tambahkan log stok awal tanpa menimpa data sebelumnya
     const stockId = generateId();
@@ -117,7 +76,6 @@ export async function readBarang() {
       }))
       .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
 
-    console.log('Data barang dari persediaan:', dataBarang.length, dataBarang); // Log untuk debugging
     return dataBarang;
   } catch (error) {
     console.error('❌ Error reading barang:', error);
