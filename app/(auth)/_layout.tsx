@@ -1,4 +1,4 @@
-import { Dimensions, Image, View } from 'react-native'
+import { Dimensions, Image, Text, View } from 'react-native'
 import { Slot } from 'expo-router'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -11,7 +11,7 @@ const layout = () => {
       extraScrollHeight={20} 
       enableOnAndroid={true} 
     >
-      <View className="flex justify-center items-center">
+      <View className="flex justify-center items-center relative">
         <View
           className="w-full relative bg-secondary flex justify-center gap-5"
           style={{ height: Dimensions.get('screen').height / 2.25 }}
@@ -26,6 +26,18 @@ const layout = () => {
           />
         </View>
         <Slot />
+        <View className='flex flex-row items-center gap-2'>
+          <Image 
+            source={require('../../assets/images/antarctic.png')}
+            className="w-24 h-24 "
+            resizeMode="contain"
+          />
+          <View>
+            <Text>Powered By</Text>
+            <Text className='text-2xl font-semibold'>Antarctic.px</Text>
+          </View>
+        </View>
+        <Text className='text-xs text-gray-500'>Copyright 2025 - Antarctic.px</Text>
       </View>
     </KeyboardAwareScrollView>
   )
