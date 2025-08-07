@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useState } from 'react';
 import { updateFunds } from '@/utils/actions/operational.action';
+import { router } from 'expo-router';
 
 export default function EditFundsForm({ onFundsUpdated }: { onFundsUpdated: any }) {
   const [fundsValue, setFundsValue] = useState('');
@@ -14,6 +15,8 @@ export default function EditFundsForm({ onFundsUpdated }: { onFundsUpdated: any 
     if (result !== null) {
       onFundsUpdated();
     }
+
+    router.push('/operasional')
   };
 
   return (

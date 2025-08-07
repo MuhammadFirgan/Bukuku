@@ -51,30 +51,40 @@ export async function readItems() {
     }
   }
 
-export async function updateFunds(fundsValue: string) {
-  try {
-    const userid = auth$.session.get().user.id;
-    if (!userid) {
-      console.error('User ID tidak ditemukan');
+  export async function updateFunds(fundsValue: string) {
+    try {
+      const userid = auth$.session.get().user.id;
+      if (!userid) {
+        console.error('User ID tidak ditemukan');
+        return null;
+      }
+      const fundsId = generateId();
+      const now = new Date().toISOString();
+      const total = parseFloat(fundsValue) || 0;
+  
+      // Hapus entri lama untuk user_id
+      const existingFunds = (await funds$.get()) || {};
+      console.log('Existing funds before deletion:', existingFunds);
+      for (const key in existingFunds) {
+        if (existingFunds[key].user_id === userid) {
+          await funds$[key].delete();
+        }
+      }
+  
+      // Simpan entri baru
+      await funds$[fundsId].set({
+        id: fundsId,
+        user_id: userid,
+        total: total,
+        created_at: now,
+      });
+      
+      return total;
+    } catch (error) {
+      console.error('Error updating funds:', error);
       return null;
     }
-    const fundsId = generateId();
-    const now = new Date().toISOString();
-    const total = parseFloat(fundsValue) || 0;
-
-    await funds$[fundsId].set({
-      id: fundsId,
-      user_id: userid,
-      total: total,
-      created_at: now,
-    });
-    console.log('Funds updated:', { id: fundsId, user_id: userid, total, created_at: now });
-    return total;
-  } catch (error) {
-    console.error('Error updating funds:', error);
-    return null;
   }
-}
 
 export async function readFunds() {
   try {

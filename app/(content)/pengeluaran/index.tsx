@@ -1,11 +1,24 @@
 import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePageSetup } from '@/utils/libs'
 import Dropdown from '@/components/Dropdown'
 import PengeluaranChart from '@/components/PengeluaranPieChart'
+import { readFunds } from '@/utils/actions/operational.action'
+import { formatRupiah } from './../../../utils/libs/index';
 
 export default function Index() {
     const [periode, setPeriode] = useState('PERIODE 1')
+    const [totalAmount, setTotalAmount] = useState('0');
+
+
+    useEffect(() => {
+        const fetchFunds = async () => {
+          const resultAmount = await readFunds();
+          setTotalAmount(resultAmount.toString());
+          console.log('Total amount:', resultAmount); // Debug
+        };
+        fetchFunds();
+      }, []);
     usePageSetup('Pengeluaran', false)
   return (
     <View className='mx-4'>
@@ -28,7 +41,7 @@ export default function Index() {
                         <Text>Biaya Pembelian Stok</Text>
                     </View>
                     <View className='flex flex-col gap-2 justify-end'>
-                        <Text>Rp 222.222.222</Text>
+                        <Text>{formatRupiah(parseInt(totalAmount))}</Text>
                         <Text>Rp 222.222.222</Text>
 
                     </View>
