@@ -42,12 +42,12 @@ export default function HistoryLayout({ width, boxWidth, barangList, stockList }
       historyMap[barang.id] = item;
       total += subtotal;
 
-      console.log(`History item untuk ${barang.nama_barang}:`, item); // Log untuk debugging
+     
     });
 
     setTotalPenjualan(total);
     setHistoryPenjualan(Object.values(historyMap));
-    console.log('Jumlah history penjualan:', Object.keys(historyMap).length); // Log jumlah history
+    
   }, [barangList, stockList]);
 
   return (

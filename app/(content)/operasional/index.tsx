@@ -1,11 +1,12 @@
 // Index.jsx
-import { View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, TextInput, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { formatRupiah, usePageSetup } from '@/utils/libs';
 import Dropdown from '@/components/Dropdown';
 import { readFunds, readItems } from '@/utils/actions/operational.action';
 import EditFundsForm from '@/components/EditFundsForm';
 import CreateModalOperasional from '@/components/CreateModalOperasional';
+import ListOperational from '@/components/ListOperational';
 
 export default function Index() {
   const [periode, setPeriode] = useState('PERIODE 1');
@@ -91,7 +92,7 @@ export default function Index() {
           {currentAmount < parseInt(totalAmount) && (
             <>
               <TouchableOpacity className="px-4 py-3 bg-primary rounded-lg" onPress={() => setModalOpen(!modalOpen)}>
-                <Text className="text-white">Tambah Barang</Text>
+                <Text className="text-white">Tambah Biaya</Text>
               </TouchableOpacity>
               <CreateModalOperasional
                 visible={modalOpen}
@@ -105,23 +106,22 @@ export default function Index() {
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}>
-        <View>
-          <Text className="uppercase font-semibold text-gray-600">History Pembayaran Biaya</Text>
-          <View className="flex flex-col gap-4 mt-4">
-            {items.length > 0 ? (
-              items.map((item) => (
-                <View key={item.id} className="flex flex-row justify-between p-4 bg-white rounded-lg">
-                  <Text className="text-gray-400 font-semibold">{item.name}</Text>
-                  <Text className="text-red-500">{formatRupiah(item.price)}</Text>
-                </View>
-              ))
-            ) : (
-              <Text className="text-gray-400">Belum ada barang</Text>
-            )}
-          </View>
-        </View>
-      </ScrollView>
+      <View className="my-4" style={{ maxHeight: 300 }}>
+        <Text className="uppercase font-semibold text-gray-600">History Pembayaran Biaya</Text>
+        <FlatList
+          data={items}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <ListOperational 
+              id={item.id}
+              name={item.name}
+              price={item.price}
+            />
+          )}
+          ListEmptyComponent={<Text className="text-gray-400 text-center mt-4">Belum ada barang</Text>}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        />
+      </View>
     </View>
   );
 }
