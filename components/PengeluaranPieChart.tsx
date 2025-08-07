@@ -3,18 +3,23 @@ import { PieChart } from 'react-native-chart-kit';
 
 const screenWidth = Dimensions.get('window').width;
 
-const PengeluaranChart = () => {
+interface chartProps {
+  totalAmount: number
+  totalPengeluaran: number
+}
+
+const PengeluaranChart = ({ totalAmount, totalPengeluaran }: chartProps) => {
   const data = [
     {
         name: 'Operasional',
-        population: 200000,
+        population: totalAmount > 0 ? totalAmount : 1,
         color: "#3b82f6",
         legendFontColor: "#3b82f6",
         legendFontSize: 15
     },
     {
         name: 'Pembelian',
-        population: 200000,
+        population: totalPengeluaran > 0 ? totalPengeluaran : 1,
         color: "#ef4444",
         legendFontColor: "#ef4444",
         legendFontSize: 15
@@ -41,10 +46,6 @@ const PengeluaranChart = () => {
         paddingLeft={"0"}
    
       />
-      {/* <View className="flex-row justify-around mt-2">
-        <Text className="text-blue-600">Operasional (40.95%)</Text>
-        <Text className="text-red-500">Pembelian (59.05%)</Text>
-      </View> */}
     </View>
   );
 };
