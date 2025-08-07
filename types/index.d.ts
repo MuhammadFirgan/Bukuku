@@ -77,4 +77,9 @@ export type Barang = {
     harga_jual: number;
     quantity: number;
   }
+
+  export interface CreateFundsInput {
+    name: string
+    price: number
+  }
  
