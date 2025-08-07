@@ -12,7 +12,7 @@ export default function EditFundsForm({ onFundsUpdated }: { onFundsUpdated: any 
     }
     const result = await updateFunds(fundsValue);
     if (result !== null) {
-      onFundsUpdated(); // Panggil callback setelah berhasil update
+      onFundsUpdated();
     }
   };
 

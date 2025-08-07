@@ -51,8 +51,6 @@ export async function createBarang(data: CreateBarangInput) {
       updated_at: now,
     };
 
-    console.log('Barang baru dibuat (offline support):', newBarang); // Log untuk debugging
-    console.log('Jumlah barang di persediaan:', Object.keys(persediaan$.get()).length); // Log jumlah barang
     return newBarang;
   } catch (error) {
     console.error('❌ Error creating barang:', error);
