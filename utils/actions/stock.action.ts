@@ -50,7 +50,6 @@ export function readStock() {
         .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()),
     };
 
-    console.log('Data stok dari stock_log:', dataStock.items.length, dataStock.items); // Log untuk debugging
     return dataStock;
   } catch (error) {
     console.error('❌ Error reading stock:', error);

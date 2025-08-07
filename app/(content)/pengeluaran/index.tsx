@@ -21,7 +21,7 @@ export default function Index() {
     const fetchFunds = async () => {
       const resultAmount = await readFunds();
       setTotalAmount(resultAmount.toString());
-      console.log('Total amount fetched:', resultAmount);
+
     };
     fetchFunds();
   }, []);
@@ -58,7 +58,7 @@ export default function Index() {
     const fetchItems = async () => {
       const itemList = await readItems();
       setOperationalItems(itemList);
-      console.log('Operational items fetched:', itemList);
+
     };
     fetchItems();
   }, []);
@@ -90,7 +90,7 @@ export default function Index() {
       );
 
       setTransaksiTerakhir(combinedTransaksi);
-      console.log('Combined transaksi:', combinedTransaksi);
+ 
     };
 
     if (barangList.length > 0 || operasionalItems.length > 0) {

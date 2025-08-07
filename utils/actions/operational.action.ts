@@ -22,14 +22,7 @@ export async function createItems(data: CreateFundsInput) {
       updated_at: now,
     });
 
-    console.log('Item created:', {
-      id: barangId,
-      user_id: userid,
-      name: data.name,
-      price: data.price,
-      created_at: now,
-      updated_at: now,
-    });
+    
     return { id: barangId, price: data.price };
   } catch (error) {
     console.error('Error creating item:', error);
@@ -40,10 +33,10 @@ export async function createItems(data: CreateFundsInput) {
 export async function readItems() {
     try {
       const getItems = (await items$.get()) || {};
-      console.log('Data items:', getItems);
+     
       const itemList = Object.values(getItems);
       itemList.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-      console.log('Sorted item list:', itemList);
+     
       return itemList;
     } catch (error) {
       console.error('Error reading items:', error);
@@ -64,7 +57,7 @@ export async function readItems() {
   
       // Hapus entri lama untuk user_id
       const existingFunds = (await funds$.get()) || {};
-      console.log('Existing funds before deletion:', existingFunds);
+     
       for (const key in existingFunds) {
         if (existingFunds[key].user_id === userid) {
           await funds$[key].delete();
