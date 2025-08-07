@@ -5,6 +5,7 @@ import Dropdown from '@/components/Dropdown';
 import { readFunds } from '@/utils/actions/operational.action';
 import ModalLayout from '@/components/ModalLayout';
 import EditFundsForm from '@/components/EditFundsForm';
+import { formatRupiah } from './../../../utils/libs/index';
 
 export default function Index() {
   const [periode, setPeriode] = useState('PERIODE 1');
@@ -47,7 +48,7 @@ export default function Index() {
           <View>
             <Text>Dana Operasional saat ini</Text>
             <Text>
-              Rp {currentAmount} dari Rp {totalAmount}
+              Rp {formatRupiah(currentAmount)} dari Rp {formatRupiah(parseInt(totalAmount))}
             </Text>
             <View className="w-3/4 h-1 bg-gray-200 mt-2 rounded-full overflow-hidden flex-row">
               <View className="h-1 bg-red-500" style={{ width: `${percentage}%` }} />
