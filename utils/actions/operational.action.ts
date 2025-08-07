@@ -90,3 +90,38 @@ export async function readFunds() {
     return 0;
   }
 }
+
+export function readOperationalById(id: string) {
+    try {
+        const barangById = items$.get()?.[id]
+
+        return barangById
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export async function updateItems(id: string, name: string, price: number) {
+  try {
+    const current = items$.get()?.[id];
+    if (!current) {
+      console.error('Barang tidak ditemukan:', id);
+      return false;
+    }
+
+    const now = new Date().toISOString();
+    const updatedItem = {
+      ...current,
+      name: name.trim(),
+      price: price,
+      updated_at: now,
+    };
+
+    await items$[id].set(updatedItem);
+    console.log('Item diperbarui:', updatedItem);
+    return true;
+  } catch (error) {
+    console.error('Gagal mengedit barang:', error);
+    throw error;
+  }
+}
