@@ -18,7 +18,6 @@ export default function Index() {
     const fetchFunds = async () => {
       const resultAmount = await readFunds();
       setTotalAmount(resultAmount.toString());
-      console.log('Total amount:', resultAmount); // Debug
     };
     fetchFunds();
   }, []);
@@ -30,7 +29,7 @@ export default function Index() {
       // Hitung currentAmount dari total harga barang
       const totalPrice = itemList.reduce((sum, item) => sum + (item.price || 0), 0);
       setCurrentAmount(totalPrice);
-      console.log('Items:', itemList, 'Current amount:', totalPrice); // Debug
+
     };
     fetchItems();
   }, []);
