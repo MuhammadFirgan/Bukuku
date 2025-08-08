@@ -123,7 +123,7 @@ export default function Index() {
             name="search"
             size={24}
             color="#9ca3af"
-            className="absolute top-1/2 -translate-y-1/2 left-3 z-50"
+            className="absolute top-1/2 -translate-y-1/2 left-3 z-50 text-black"
           />
           <TextInput
             className="border border-gray-400 w-72 rounded-xl pl-10 pr-2 py-1 bg-white"

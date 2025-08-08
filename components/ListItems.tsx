@@ -65,9 +65,9 @@ export default function ListItems({ name, price, stock, id }: ListItemsProps) {
             </TouchableOpacity>
 
             <TouchableOpacity
-              className={`p-1 rounded ${localStock >= stock + maxIncrement ? 'bg-gray-300' : 'bg-primary'}`}
+              className={`p-1 rounded ${localStock >= maxIncrement ? 'bg-gray-300' : 'bg-primary'}`}
               onPress={handleIncrement}
-              disabled={localStock >= stock + maxIncrement}
+              disabled={localStock >= maxIncrement}
             >
               <AntDesign name="plus" size={12} color="white" />
             </TouchableOpacity>

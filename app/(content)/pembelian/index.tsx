@@ -33,7 +33,7 @@ export default function Index() {
     };
 
     fetchData();
-  }, []);
+  }, [barang, stock]);
 
   useEffect(() => {
     // Tentukan rentang tanggal untuk periode yang dipilih
@@ -71,7 +71,7 @@ export default function Index() {
     };
 
     calculateTotalPengeluaran();
-  }, [stock, barang, periode]);
+  }, [stock, barang, periode, monthIndex]);
 
   // Footer Ringkasan
   usePageSetup(

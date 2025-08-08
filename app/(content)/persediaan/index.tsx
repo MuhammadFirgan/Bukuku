@@ -126,9 +126,9 @@ export default function Index() {
       </View>
       <View className="flex flex-row items-center gap-4 pt-8 px-7 mb-5">
         <View className="relative">
-          <EvilIcons name="search" size={24} color="black" className="absolute top-1/2 -translate-y-1/2 left-3" />
+          <EvilIcons name="search" size={24} color="black" className="absolute top-1/2 -translate-y-4 left-3" />
           <TextInput
-            className="border border-gray-400 w-72 rounded-xl pl-10 pr-2 py-1"
+            className="border border-gray-400 w-72 rounded-xl pl-10 pr-2 py-1 text-black"
             placeholder="Search..."
             onChangeText={handleSearchChange}
           />
