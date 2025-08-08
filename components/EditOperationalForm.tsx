@@ -16,7 +16,7 @@ export default function EditOperationalForm({ visible, onClose, id, onSave }: Mo
     if (currentBarang) {
       setNamaBiaya(currentBarang.name || '');
       setNominal(currentBarang.price ? currentBarang.price.toString() : '');
-      console.log('Item loaded:', currentBarang);
+
     }
   }, [id]);
 
@@ -26,7 +26,7 @@ export default function EditOperationalForm({ visible, onClose, id, onSave }: Mo
     const trimmedNama = namaBiaya.trim();
     const parsedNominal = parseInt(nominal);
 
-    console.log('Form input:', { trimmedNama, nominal, parsedNominal });
+
 
     if (!trimmedNama) {
       Alert.alert('Error', 'Nama biaya tidak boleh kosong');
