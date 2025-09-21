@@ -23,7 +23,7 @@ export const totalKeluar = stockLogs
 
 
 export function usePageSetup(
-  title: string,
+  title: string | React.ReactNode,
   showFooter: boolean = false,
   footerContent?: React.ReactNode
 ) {
@@ -32,7 +32,7 @@ export function usePageSetup(
 
   useEffect(() => {
 
-    setTitle(title);
+    setTitle(title as string);
     setShowFooter(showFooter);
 
     if (footerContent !== undefined) {
