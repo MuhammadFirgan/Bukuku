@@ -35,21 +35,21 @@ export default function CreateModalOperasional({
   };
 
   return (
-    <ModalLayout headerTitle="BARANG BARU" buttonLabel="Barang Baru" visible={visible} onClose={onClose}>
+    <ModalLayout headerTitle="BIAYA BARU" buttonLabel="Barang Baru" visible={visible} onClose={onClose}>
       <View className="flex flex-row gap-4 px-4 mt-12">
         <View className="flex flex-col gap-4">
           <View className="flex flex-row items-center gap-5">
-            <Text className="text-right">Nama Barang</Text>
+            <Text className="text-right">Nama Biaya</Text>
             <TextInput
               className="border border-gray-400 w-72 text-xs rounded-xl px-2 py-1"
               value={namaBarang}
               onChangeText={setNamaBarang}
-              placeholder="Masukkan nama barang"
+              placeholder="Masukkan nama biaya"
             />
           </View>
 
           <View className="flex flex-row items-center gap-5">
-            <Text className="text-right">Harga Barang</Text>
+            <Text className="text-right max-w-24">Biaya yang dikeluarkan</Text>
             <TextInput
               className="border border-gray-400 w-72 text-xs rounded-xl px-2 py-1"
               value={hargaBarang.toString()}

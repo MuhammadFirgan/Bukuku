@@ -9,7 +9,7 @@ export default function DashboardCard({ item, index }: any) {
     const itemSize = width / 2
 
     const isLeftColumn = index % 2 === 0
-    const isLastRow = index >= 6 - 2  
+    const isLastRow = index >= 8 - 2  
   
     return (
     <TouchableOpacity 

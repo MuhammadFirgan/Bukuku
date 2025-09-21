@@ -118,7 +118,7 @@ export async function updateItems(id: string, name: string, price: number) {
     };
 
     await items$[id].set(updatedItem);
-    console.log('Item diperbarui:', updatedItem);
+    
     return true;
   } catch (error) {
     console.error('Gagal mengedit barang:', error);

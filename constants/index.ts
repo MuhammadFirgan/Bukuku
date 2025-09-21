@@ -5,6 +5,7 @@ export const menuItems = [
     { label: 'Pengeluaran', icon: require('../assets/images/pengeluaran.png'), route: '/pengeluaran' },
     { label: 'Pembelian', icon: require('../assets/images/pembelian.png'), route: '/pembelian' },
     { label: 'Laporan', icon: require('../assets/images/report.png'), route: '/laporan' },
+    { label: 'Aset & Hutang', icon: require('../assets/images/report.png'), route: '/aset_hutang' },
 ];
 
 export const items = [
@@ -28,4 +29,50 @@ export const items = [
         harga: 4500,
         stock: 15
     },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
+    {
+        nama: "Sabun cuci",
+        harga: 4500,
+        stock: 15
+    },
 ]
+

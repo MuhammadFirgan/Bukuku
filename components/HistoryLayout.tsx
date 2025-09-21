@@ -20,34 +20,31 @@ export default function HistoryLayout({ width, boxWidth, barangList, stockList }
     let historyMap: Record<string, HistoryItem> = {};
     let total = 0;
 
-   
-
     barangList.forEach((barang) => {
       const logBarang = stockList.filter((log) => log.barang_id === barang.id);
       const keluarLogs = logBarang.filter((log) => log.type === 'out');
       const totalKeluar = keluarLogs.reduce((sum, log) => sum + (log.amount ?? 0), 0);
       const subtotal = totalKeluar * barang.harga_jual;
 
-      // Tambahkan semua barang, bahkan jika totalKeluar = 0
-      const item: HistoryItem = {
-        id: generateId(),
-        barang_id: barang.id,
-        nama_barang: barang.nama_barang,
-        amount: totalKeluar,
-        harga_jual: barang.harga_jual,
-        subtotal,
-      };
+      // Hanya tambahkan barang yang terjual (totalKeluar > 0)
+      if (totalKeluar > 0) {
+        const item: HistoryItem = {
+          id: generateId(),
+          barang_id: barang.id,
+          nama_barang: barang.nama_barang,
+          amount: totalKeluar,
+          harga_jual: barang.harga_jual,
+          subtotal,
+        };
 
-      createHistory(item);
-      historyMap[barang.id] = item;
-      total += subtotal;
-
-     
+        createHistory(item);
+        historyMap[barang.id] = item;
+        total += subtotal;
+      }
     });
 
     setTotalPenjualan(total);
     setHistoryPenjualan(Object.values(historyMap));
-    
   }, [barangList, stockList]);
 
   return (
@@ -78,6 +75,7 @@ export default function HistoryLayout({ width, boxWidth, barangList, stockList }
               nama_barang={item.nama_barang}
               amount={item.amount}
               harga_jual={item.harga_jual}
+              // subtotal={item.subtotal}
             />
           )}
           ListEmptyComponent={

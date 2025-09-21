@@ -8,7 +8,10 @@ type Props = {
 }
 
 export default function ListPenjualan({ nama_barang, amount, harga_jual }: Props) {
-  return (
+  if (amount <= 0) {
+    return null;
+  }
+  return ( 
     <View className='p-5 flex flex-row justify-between items-center border-b border-gray-300'>
       <View className='flex w-[30%]'>
         <Text className='font-semibold' numberOfLines={1} ellipsizeMode="tail">{nama_barang}</Text>
