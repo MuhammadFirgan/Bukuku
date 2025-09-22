@@ -3,6 +3,7 @@ import { customSynced, supabase } from "../SupaLegend";
 
 
 export const funds$ = observable(
+    // @ts-ignore
     customSynced({
         supabase,
         collection: 'operational_funds',
@@ -21,6 +22,7 @@ export const funds$ = observable(
 )
 
 export const items$ = observable(
+    // @ts-ignore
     customSynced({
         supabase,
         collection: 'operational_items',
