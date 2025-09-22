@@ -82,4 +82,11 @@ export type Barang = {
     name: string
     price: number
   }
+
+  export interface CreateAssetForm {
+    keterangan: string;
+    nominal: number;
+    kategori: string;
+    tanggal?: string;
+  }
  
