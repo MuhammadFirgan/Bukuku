@@ -2,7 +2,7 @@ import { observable } from "@legendapp/state";
 import { customSynced, supabase } from "../SupaLegend";
 
 
-export const aset$ = observable(
+export const debt$ = observable(
     // @ts-ignore
     customSynced({
         supabase,
