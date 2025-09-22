@@ -50,11 +50,21 @@ export default function Index() {
     fetchingAsset()
    }, [activeForm])
 
+   let totalNominal 
+
+   if(activeForm === 'asset') {
+    totalNominal = resultAsset.reduce((sum, item) => sum + (item.nominal || 0), 0);
+   }
+
+   if(activeForm === 'debt') {
+    totalNominal = resultAsset.reduce((sum, item) => sum + (item.nominal || 0), 0);
+   }
+
 
     usePageSetup(
         <View className='flex flex-col justify-center items-center'>
             <Text className='text-3xl text-white font-semibold'>{activeForm === "asset" ? "Aset Usaha" : "Hutang Usaha"}</Text>
-            <Text className='text-4xl text-white font-semibold'>Rp 0</Text>
+            <Text className='text-4xl text-white font-semibold'>Rp {totalNominal?.toLocaleString('id-ID')}</Text>
         </View>,
         false,
     );
@@ -113,7 +123,7 @@ export default function Index() {
                 <View className='h-64'>
                     <FlatList
                         data={resultAsset}
-                        keyExtractor={index => `${index}`}
+                        keyExtractor={(item, index) => item.id || index.toString()}
                         renderItem={({ item }) => (
                             <View className="flex flex-row justify-between px-2 py-1 border-b border-gray-100">
                                 <Text className="text-xs text-gray-700 w-1/3">{activeForm === 'asset' ? item.kategori : item.tanggal}</Text>

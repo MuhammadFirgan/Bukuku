@@ -84,6 +84,7 @@ export type Barang = {
   }
 
   export interface CreateAssetForm {
+    id?: string
     keterangan: string;
     nominal: number;
     kategori?: string;

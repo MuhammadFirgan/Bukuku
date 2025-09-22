@@ -40,6 +40,7 @@ export function readAsset() {
         if (fetchingDataAsset && typeof fetchingDataAsset === 'object') {
             const processedData = Object.values(fetchingDataAsset)
                 .map(item => ({
+                    id: item.id,
                     keterangan: item.keterangan,
                     kategori: item.kategori,
                     nominal: item.nominal,
