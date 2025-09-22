@@ -5,6 +5,7 @@ import Calendar from 'react-native-calendars/src/calendar';
 import { createAsset } from '@/utils/actions/aset.action';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { createdDebt } from '@/utils/actions/debt.action';
+import { router } from 'expo-router';
 
 interface assetFormProps {
   type: 'asset' | 'debt';
@@ -42,6 +43,7 @@ export default function CreateAssetsForm({ type, title, label1, label2, label3 }
         setNominal('');
         setCategory('');
         Alert.alert('Sukses', 'Aset berhasil ditambahkan');
+        router.push('/aset_hutang');
       }
 
 
@@ -65,6 +67,7 @@ export default function CreateAssetsForm({ type, title, label1, label2, label3 }
         setNominal('');
         setDescription('');
         Alert.alert('Sukses', 'Hutang berhasil ditambahkan');
+        router.push('/aset_hutang');
       }
     }
 
