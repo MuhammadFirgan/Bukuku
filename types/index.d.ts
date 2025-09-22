@@ -44,7 +44,7 @@ export interface PersediaanForm {
 
 export type StockLog = {
     barang_id: string
-    type: 'in' | 'out'
+    type: 'in' | 'out' | null
     amount: number
     created_at?: string
   }
