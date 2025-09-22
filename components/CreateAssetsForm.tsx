@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Calendar from 'react-native-calendars/src/calendar';
 import { createAsset } from '@/utils/actions/aset.action';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { createdDebt } from '@/utils/actions/debt.action';
 
 interface assetFormProps {
   type: 'asset' | 'debt';
@@ -46,8 +47,24 @@ export default function CreateAssetsForm({ type, title, label1, label2, label3 }
 
     } else if (type === 'debt') {
       if (!selectedDate || !nominal || !description) {
+        console.log('Selected Date:', selectedDate);
+        console.log('Nominal:', nominal);
+        console.log('Description:', description);
         Alert.alert('Error', 'Mohon lengkapi semua data');
         return;
+      }
+
+      const resultDebt = createdDebt({
+        tanggal: selectedDate,
+        nominal: parseFloat(nominal),
+        keterangan: description,
+      })
+
+      if(resultDebt) {
+        setSelectedDate('');
+        setNominal('');
+        setDescription('');
+        Alert.alert('Sukses', 'Hutang berhasil ditambahkan');
       }
     }
 
@@ -103,8 +120,8 @@ export default function CreateAssetsForm({ type, title, label1, label2, label3 }
           ) : (
             <TextInput
               className='border border-gray-400 w-1/2 text-xs rounded-xl px-2 py-1'
-              value={description}
-              onChangeText={setDescription}
+              value={category}
+              onChangeText={setCategory}
             />
           )}
         </View>
@@ -120,10 +137,11 @@ export default function CreateAssetsForm({ type, title, label1, label2, label3 }
         <View className='flex flex-row items-center gap-5 mt-4'>
           <Text className='w-1/4'>{label3}</Text>
           <TextInput
-            className='border border-gray-400 w-1/2 text-xs rounded-xl px-2 py-1'
-            value={category}
-            onChangeText={setCategory}
-          />
+              className='border border-gray-400 w-1/2 text-xs rounded-xl px-2 py-1'
+              value={description}
+              onChangeText={setDescription}
+            />
+          
         </View>
         <CustomButton
           text='Simpan'

@@ -6,34 +6,54 @@ import CreateAssetsForm from '@/components/CreateAssetsForm';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { readAsset } from '@/utils/actions/aset.action';
 import { CreateAssetForm } from '@/types';
+import { readDebt } from '@/utils/actions/debt.action';
 
 
 export default function Index() {
 
     const [activeForm, setActiveForm] = useState('asset');
     const [loading, setLoading] = useState(true);
-    const [result, setResult] = useState<CreateAssetForm[]>([]);
+    const [resultAsset, setResultAsset] = useState<CreateAssetForm[]>([]);
 
 
    const fetchingAsset = () => {
-        try {
-            const data = readAsset();
-            setResult(data);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching asset data:", error);
-            setLoading(false);
+        if(activeForm === 'asset') {
+            setLoading(true);
+            try {
+                const data = readAsset();
+                setResultAsset(data);
+            } catch (error) {
+                console.error("Error fetching asset data:", error);
+        
+            } finally {
+                setLoading(false);
+            }
         }
+
+        if(activeForm === 'debt') {
+            setLoading(true);
+            try {
+                
+                const data = readDebt(); 
+                setResultAsset(data);
+            } catch (error) {
+                console.error("Error fetching debt data:", error);
+        
+            } finally {
+                setLoading(false);
+            }
+        }
+        
    }
 
    useEffect(() => {
     fetchingAsset()
-   }, [result])
+   }, [activeForm])
 
 
     usePageSetup(
         <View className='flex flex-col justify-center items-center'>
-            <Text className='text-3xl text-white font-semibold'>Aset Usaha</Text>
+            <Text className='text-3xl text-white font-semibold'>{activeForm === "asset" ? "Aset Usaha" : "Hutang Usaha"}</Text>
             <Text className='text-4xl text-white font-semibold'>Rp 0</Text>
         </View>,
         false,
@@ -57,7 +77,7 @@ export default function Index() {
         >  
         <View className="flex-1 flex-col gap-4">
             <View className="flex flex-col gap-3 bg-white p-4 mx-4 mt-5 rounded-xl">
-                <Text className="text-xl font-semibold px-3 text-center mb-4">Rincian Aset Usaha</Text>
+                <Text className="text-xl font-semibold px-3 text-center mb-4">{activeForm === 'asset' ? 'Rincian Aset Usaha' : 'Rincian Hutang Usaha'}</Text>
                 <View className="flex flex-row justify-center space-x-4 my-2 mx-4 gap-4">
                     <TouchableOpacity
                         onPress={() => setActiveForm('asset')}
@@ -92,11 +112,11 @@ export default function Index() {
 
                 <View className='h-64'>
                     <FlatList
-                        data={result}
-                        keyExtractor={(item, index) => `${index}`}
+                        data={resultAsset}
+                        keyExtractor={index => `${index}`}
                         renderItem={({ item }) => (
                             <View className="flex flex-row justify-between px-2 py-1 border-b border-gray-100">
-                                <Text className="text-xs text-gray-700 w-1/3">{item.kategori}</Text>
+                                <Text className="text-xs text-gray-700 w-1/3">{activeForm === 'asset' ? item.kategori : item.tanggal}</Text>
                                 <Text className="text-xs text-gray-700 w-1/3 text-center">{item.keterangan}</Text>
                                 <Text className="text-xs text-gray-700 w-1/3 text-right">
                                     {item.nominal.toLocaleString('id-ID')}
