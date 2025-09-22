@@ -2,6 +2,7 @@ import { observable } from "@legendapp/state";
 import { customSynced, supabase } from "../SupaLegend";
 
 export const history$ = observable(
+  // @ts-ignore
     customSynced({
         supabase,
         collection: 'history_penjualan',
