@@ -1,11 +1,36 @@
 import { items } from '@/constants'
 import { usePageSetup } from '@/utils/libs'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'; // Import useState
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { useEffect, useState } from 'react'; // Import useState
 import CreateAssetsForm from '@/components/CreateAssetsForm';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { readAsset } from '@/utils/actions/aset.action';
+import { CreateAssetForm } from '@/types';
 
 
 export default function Index() {
+
+    const [activeForm, setActiveForm] = useState('asset');
+    const [loading, setLoading] = useState(true);
+    const [result, setResult] = useState<CreateAssetForm[]>([]);
+
+
+   const fetchingAsset = () => {
+        try {
+            const data = readAsset();
+            setResult(data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching asset data:", error);
+            setLoading(false);
+        }
+   }
+
+   useEffect(() => {
+    fetchingAsset()
+   }, [result])
+
+
     usePageSetup(
         <View className='flex flex-col justify-center items-center'>
             <Text className='text-3xl text-white font-semibold'>Aset Usaha</Text>
@@ -14,9 +39,22 @@ export default function Index() {
         false,
     );
 
-    const [activeForm, setActiveForm] = useState('asset');
+      if (loading) {
+        return (
+          <View className="flex-1 justify-center items-center">
+            <ActivityIndicator size="large" color="#4F46E5" />
+            <Text className="mt-2 text-gray-600">Memuat data...</Text>
+          </View>
+        );
+      }
+  
 
     return (
+    <KeyboardAwareScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        extraScrollHeight={100} 
+        enableOnAndroid={true} 
+        >  
         <View className="flex-1 flex-col gap-4">
             <View className="flex flex-col gap-3 bg-white p-4 mx-4 mt-5 rounded-xl">
                 <Text className="text-xl font-semibold px-3 text-center mb-4">Rincian Aset Usaha</Text>
@@ -54,14 +92,14 @@ export default function Index() {
 
                 <View className='h-64'>
                     <FlatList
-                        data={items}
-                        keyExtractor={(item, index) => `${item.nama}-${index}`}
+                        data={result}
+                        keyExtractor={(item, index) => `${index}`}
                         renderItem={({ item }) => (
                             <View className="flex flex-row justify-between px-2 py-1 border-b border-gray-100">
-                                <Text className="text-xs text-gray-700 w-1/3">{item.nama}</Text>
-                                <Text className="text-xs text-gray-700 w-1/3 text-center">{item.stock}</Text>
+                                <Text className="text-xs text-gray-700 w-1/3">{item.kategori}</Text>
+                                <Text className="text-xs text-gray-700 w-1/3 text-center">{item.keterangan}</Text>
                                 <Text className="text-xs text-gray-700 w-1/3 text-right">
-                                    {item.harga.toLocaleString('id-ID')}
+                                    {item.nominal.toLocaleString('id-ID')}
                                 </Text>
                             </View>
                         )}
@@ -88,5 +126,6 @@ export default function Index() {
                 />
             )}
         </View>
+    </KeyboardAwareScrollView>
     );
 }
