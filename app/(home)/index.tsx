@@ -3,7 +3,7 @@ import DashboardCard from "@/components/DashboardCard";
 import LogoutButton from "@/components/LogoutButton";
 import { menuItems } from "@/constants";
 import { FlatList, Image, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
  
 export default function Index() {
   return (
