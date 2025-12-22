@@ -9,7 +9,7 @@ interface chartProps {
   totalPengeluaran: number
 }
 
-const PengeluaranChart = ({ totalAmount, totalPengeluaran }: chartProps) => {
+const PengeluaranPieChart = ({ totalAmount, totalPengeluaran }: chartProps) => {
   const data = [
     {
         name: 'Operasional',
@@ -59,4 +59,4 @@ const PengeluaranChart = ({ totalAmount, totalPengeluaran }: chartProps) => {
   );
 };
 
-export default PengeluaranChart;
+export default PengeluaranPieChart;
