@@ -6,6 +6,7 @@ export const menuItems = [
     { label: 'Pembelian', icon: require('../assets/images/pembelian.png'), route: '/pembelian' },
     { label: 'Laporan', icon: require('../assets/images/report.png'), route: '/laporan' },
     { label: 'Aset & Hutang', icon: require('../assets/images/hutang.png'), route: '/aset_hutang' },
+
 ];
 
 export const items = [

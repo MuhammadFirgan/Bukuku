@@ -1,5 +1,6 @@
-import { View, Text, Dimensions } from 'react-native';
-import { PieChart } from 'react-native-chart-kit';
+import { Dimensions, View } from 'react-native';
+
+import PieChartInit from './PieChartInit';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -27,26 +28,34 @@ const PengeluaranChart = ({ totalAmount, totalPengeluaran }: chartProps) => {
   ]
 
   return (
-    <View className="pt-10">
-      <Text className="text-center font-bold">TOTAL PENGELUARAN</Text>
-      <PieChart
+    <View className='mt-10'>
+      <PieChartInit 
+        title='Total Pengeluaran'
         data={data}
-        width={screenWidth - 50}
+        width={screenWidth - 30}
         height={220}
-        chartConfig={{
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          strokeWidth: 2,
-          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        accessor="population"
-        backgroundColor={"transparent"}
-        paddingLeft={"0"}
-   
       />
     </View>
+    // <View className="pt-10">
+    //   <Text className="text-center font-bold">TOTAL PENGELUARAN</Text>
+    //   <PieChart
+    //     data={data}
+    //     width={screenWidth - 30}
+    //     height={220}
+    //     chartConfig={{
+    //       color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    //       strokeWidth: 2,
+    //       labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    //       style: {
+    //         borderRadius: 16,
+    //       },
+    //     }}
+    //     accessor="population"
+    //     backgroundColor={"transparent"}
+    //     paddingLeft={"0"}
+   
+    //   />
+    // </View>
   );
 };
 
