@@ -22,7 +22,7 @@ export default function ModalLayout({ headerTitle, children, visible, onClose }:
                     className='w-full'
                     onPress={(e) => e.stopPropagation()}    
                 >
-                    <View className='bg-white h-96 rounded-2xl m-3'>
+                    <View className='bg-white min-h-96 rounded-2xl m-3'>
                         {/* header */}
                         <View className='bg-primary h-40 rounded-b-2xl shadow-md'>
                             <TouchableOpacity

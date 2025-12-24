@@ -12,7 +12,7 @@ export default function TransactionPieChart({totalPendapatan, totalPengeluaran}:
     const transactionData = [
     {
         name: 'Penjualan',
-        population: totalPendapatan > 0 ? totalPengeluaran : 1,
+        population: totalPendapatan > 0 ? totalPendapatan : 1,
         color: "#ffdf20",
         legendFontColor: "#ffdf20",
         legendFontSize: 15
