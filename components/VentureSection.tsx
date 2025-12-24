@@ -9,8 +9,7 @@ import { readAsset } from '@/utils/actions/aset.action';
 
 export default function VentureSection({ totalKeuntungan }: { totalKeuntungan: number }) {
   const [totalBebanUsaha, setTotalBebanUsaha] = useState<number>(0);
-  const [totalAset, setTotalAset] = useState<number>(0); // Opsional, jika butuh nanti
-
+  const [totalAset, setTotalAset] = useState<number>(0);
   useEffect(() => {
     try {
  
@@ -26,8 +25,6 @@ export default function VentureSection({ totalKeuntungan }: { totalKeuntungan: n
       setTotalBebanUsaha(totalHutang);
       setTotalAset(totalAsset); 
 
-      console.log("Total Hutang (Beban Usaha):", totalHutang);
-      console.log("Total Aset:", totalAsset);
     } catch (error) {
       console.error("Error fetching asset or debt data:", error);
     }

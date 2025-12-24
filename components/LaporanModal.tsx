@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import ModalLayout from './ModalLayout'
 import { ModalTrigger } from '@/types'
 import WrapText from './WrapText'
+import LabaRugiMode from './LabaRugiMode'
+import ArusKasMode from './ArusKasMode'
+import HutangAsetMode from './HutangAsetMode'
 
 export default function LaporanModal({visible, onClose}: ModalTrigger) {
     const [mode, setMode] = useState<'Laba Rugi' | 'Arus Kas' | 'Hutang & Aset'>('Laba Rugi')
@@ -39,92 +42,13 @@ export default function LaporanModal({visible, onClose}: ModalTrigger) {
             </View>
             {mode === 'Laba Rugi' && (
                 
-                <View>
-                    <Text className='font-semibold text-lg mt-4 uppercase'>Pendapatan</Text>
-                    <WrapText 
-                        label='Total Pendapatan Kotor'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Total Modal'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Total Keuntungan'
-                        value={200}
-                    />
-                    <Text className='font-semibold text-lg mt-4 uppercase'>Beban Operasional</Text>
-                    <WrapText 
-                        label='Gaji'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Listrik'
-                        value={200}
-                    />
-                </View>
+                <LabaRugiMode />
             )}
             {mode === 'Arus Kas' && (
-                <View>
-                    <Text className='font-semibold text-lg mt-4 uppercase'>Kas Masuk</Text>
-                    <WrapText 
-                        label='Penerimaan'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Total Kas Masuk'
-                        value={200}
-                        isBold
-                    />
-                    <Text className='font-semibold text-lg mt-4 uppercase'>Kas Keluar</Text>
-                    <WrapText 
-                        label='Total Keuntungan'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Gaji'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Listrik'
-                        value={200}
-                    />
-                    <Text className='font-semibold text-lg mt-4 uppercase'>Kas Keluar</Text>
-                    <WrapText 
-                        label='Gaji'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Listrik'
-                        value={200}
-                    />
-                </View>
+                <ArusKasMode />
             )}
             {mode === 'Hutang & Aset' && (
-                <View>
-                    <Text className='font-semibold text-lg mt-4 uppercase'>Pendapatan</Text>
-                    <WrapText 
-                        label='Total Pendapatan Kotor'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Total Modal'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Total Keuntungan'
-                        value={200}
-                    />
-                    <Text className='font-semibold text-lg mt-4 uppercase'>Beban Operasional</Text>
-                    <WrapText 
-                        label='Gaji'
-                        value={200}
-                    />
-                    <WrapText 
-                        label='Listrik'
-                        value={200}
-                    />
-                </View>
+                <HutangAsetMode />
             )}
         </View>
     </ModalLayout>

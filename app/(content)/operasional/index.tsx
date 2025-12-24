@@ -1,6 +1,6 @@
 // Index.jsx
 import { View, Text, TouchableOpacity, ScrollView, TextInput, FlatList } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { formatRupiah, usePageSetup } from '@/utils/libs';
 import Dropdown from '@/components/Dropdown';
 import { readFunds, readItems } from '@/utils/actions/operational.action';
@@ -15,30 +15,48 @@ export default function Index() {
   const [currentAmount, setCurrentAmount] = useState(0); // Inisialisasi ke 0, akan dihitung dari items$
   const [items, setItems] = useState<any[]>([]);
 
-  useEffect(() => {
-    const fetchFunds = async () => {
-      const resultAmount = await readFunds();
-      setTotalAmount(resultAmount.toString());
-    };
-    fetchFunds();
-  }, []);
+  // useEffect(() => {
+  //   const fetchFunds = async () => {
+  //     const resultAmount = await readFunds();
+  //     setTotalAmount(resultAmount.toString());
+  //   };
+  //   fetchFunds();
+  // }, []);
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      const itemList = await readItems();
-      setItems(itemList);
-      // Hitung currentAmount dari total harga barang
-      const totalPrice = itemList.reduce((sum, item) => sum + (item.price || 0), 0);
-      setCurrentAmount(totalPrice);
+  // useEffect(() => {
+  //   const fetchItems = async () => {
+  //     const itemList = await readItems();
+  //     setItems(itemList);
+  //     // Hitung currentAmount dari total harga barang
+  //     const totalPrice = itemList.reduce((sum, item) => sum + (item.price || 0), 0);
+  //     setCurrentAmount(totalPrice);
 
+  //   };
+  //   fetchItems();
+  // }, []);
+
+  // const handleFundsUpdated = async () => {
+  //   const resultAmount = await readFunds();
+  //   setTotalAmount(resultAmount.toString());
+  
+  // };
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [funds, items] = await Promise.all([readFunds(), readItems()]);
+        setTotalAmount(funds.toString());
+        setItems(items);
+        setCurrentAmount(items.reduce((sum, item) => sum + (item.price || 0), 0));
+      } catch (error) {
+        console.error('Gagal memuat data:', error);
+      }
     };
-    fetchItems();
+    loadData();
   }, []);
 
   const handleFundsUpdated = async () => {
-    const resultAmount = await readFunds();
-    setTotalAmount(resultAmount.toString());
-  
+    const funds = await readFunds();
+    setTotalAmount(funds.toString());
   };
 
   const handleItemCreated = async (price: number) => {
@@ -49,18 +67,27 @@ export default function Index() {
   };
 
   const percentage = totalAmount && parseFloat(totalAmount) > 0 ? (currentAmount / parseFloat(totalAmount)) * 100 : 0;
+  const headerElement = useMemo(() => (
+  <View className="bg-white mx-4 p-4 -mt-8 rounded-lg flex flex-row justify-between items-center">
+    <View>
+      <Text className="text-lg font-semibold">Total Beban</Text>
+      <Text className="text-sm text-gray-400">Biaya untuk operasional toko</Text>
+    </View>
+    <Text className="text-xl text-red-500 font-semibold">
+      {formatRupiah(currentAmount)}
+    </Text>
+  </View>
+), [currentAmount]);
 
   usePageSetup(
     'Operasional',
     true,
-    <View className="bg-white mx-4 p-4 -mt-8 rounded-lg flex flex-row justify-between items-center">
-      <View>
-        <Text className="text-lg font-semibold">Total Beban</Text>
-        <Text className="text-sm text-gray-400">Biaya untuk operasional toko</Text>
-      </View>
-      <Text className="text-xl text-red-500 font-semibold">{formatRupiah(currentAmount)}</Text>
-    </View>
+  
+    headerElement
   );
+
+  console.log("current amount : ", currentAmount)
+  console.log("total amount : ", totalAmount)
 
   return (
     <View className="mx-4 flex-1">
@@ -70,7 +97,7 @@ export default function Index() {
           <View>
             <Text>Dana Operasional saat ini</Text>
             <Text>
-              Rp {formatRupiah(currentAmount)} dari Rp {formatRupiah(parseInt(totalAmount))}
+              {formatRupiah(currentAmount)} dari {formatRupiah(parseInt(totalAmount))}
             </Text>
             <View className="w-3/4 h-1 bg-gray-200 mt-2 rounded-full overflow-hidden flex-row">
               <View className="h-1 bg-red-500" style={{ width: `${percentage}%` }} />
