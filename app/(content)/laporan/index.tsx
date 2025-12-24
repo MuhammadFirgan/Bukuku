@@ -29,7 +29,6 @@ export default function Index() {
   
           let pengeluaran = 0;
 
-          console.log("barang : ", barang)
   
           barang.forEach((b) => {
             const logBarang = stock.filter((log) => log.barang_id === b.id);
