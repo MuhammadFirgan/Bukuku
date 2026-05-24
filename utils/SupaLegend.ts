@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 export const supabase = createClient(
   process.env.EXPO_PUBLIC_SUPABASE_URL!,
-  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!, {
+  process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
